@@ -1,5 +1,13 @@
 (function(){
   'use strict';
+  function loadIntegrations(){
+    if(document.querySelector('script[data-evruni-creator-integrations]'))return;
+    var s=document.createElement('script');
+    s.src='/assets/creator-integrations.js?v=1';
+    s.async=true;
+    s.dataset.evruniCreatorIntegrations='1';
+    document.head.appendChild(s);
+  }
   function renderCreatorTools(){
     var view=document.getElementById('view');
     var title=document.getElementById('viewTitle');
@@ -13,6 +21,7 @@
       <div class="creator-tools-event-note"><a href="/creator-tools.php" style="color:inherit">Открыть полный Creator Workspace →</a></div>
     </section>`;
     view.querySelectorAll('.creator-tool-card').forEach(function(card){var key='evruni_creator_tool_'+card.dataset.tool,input=card.querySelector('input');try{input.checked=localStorage.getItem(key)==='1'}catch(_){ }input.addEventListener('change',function(){try{localStorage.setItem(key,input.checked?'1':'0')}catch(_){ }});});
+    loadIntegrations();
   }
   function bind(button){
     if(!button||button.__evruniCreatorBound)return;
