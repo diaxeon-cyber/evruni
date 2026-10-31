@@ -1,8 +1,9 @@
 (function(){
   function init(){
     const sidebar=document.querySelector('.sidebar');
+    const app=document.querySelector('.app');
     if(!sidebar)return;
-    const KEY='evruni_sidebar_collapsed_v1';
+    const KEY='evruni_sidebar_collapsed_v2';
     let collapsed=true;
     try{
       const saved=localStorage.getItem(KEY);
@@ -14,13 +15,14 @@
       style.id='evruni-sidebar-ui';
       style.textContent=`
         .sidebar{transition:width .24s ease,flex-basis .24s ease,padding .24s ease}
-        .sidebar.sidebar-collapsed{width:84px;flex-basis:84px;padding-left:10px;padding-right:10px}
+        .app.sidebar-menu-collapsed{grid-template-columns:84px minmax(0,1fr)!important}
+        .sidebar.sidebar-collapsed{width:84px!important;min-width:84px!important;flex-basis:84px!important;padding-left:10px!important;padding-right:10px!important}
         .sidebar.sidebar-collapsed .logo{justify-content:center;margin-left:0;margin-right:0;padding-left:4px;padding-right:4px}
-        .sidebar.sidebar-collapsed .logo-copy{display:none}
+        .sidebar.sidebar-collapsed .logo-copy{display:none!important}
         .sidebar.sidebar-collapsed .nav{justify-content:center;padding-left:8px;padding-right:8px;gap:0}
-        .sidebar.sidebar-collapsed .nav>span:not(:first-child){display:none}
+        .sidebar.sidebar-collapsed .nav>span:not(:first-child){display:none!important}
         .sidebar.sidebar-collapsed .side-bottom a{justify-content:center;padding-left:8px;padding-right:8px;gap:0}
-        .sidebar.sidebar-collapsed .side-bottom a>span:not(:first-child){display:none}
+        .sidebar.sidebar-collapsed .side-bottom a>span:not(:first-child){display:none!important}
         .sidebar-collapse-toggle{width:100%;margin:0 0 10px;padding:8px 10px;border:1px solid rgba(157,170,204,.12);border-radius:12px;background:rgba(255,255,255,.025);color:#8f9ab2;cursor:pointer;transition:.2s ease;font-size:12px}
         .sidebar-collapse-toggle:hover{color:#fff;border-color:rgba(159,139,255,.3);background:rgba(141,112,255,.08)}
         .sidebar.sidebar-collapsed .sidebar-collapse-toggle{font-size:0;padding:8px 4px}
@@ -59,6 +61,7 @@
 
     function apply(){
       sidebar.classList.toggle('sidebar-collapsed',collapsed);
+      if(app)app.classList.toggle('sidebar-menu-collapsed',collapsed);
       btn.textContent=collapsed?'':'Свернуть меню';
       btn.setAttribute('aria-label',collapsed?'Развернуть меню':'Свернуть меню');
       btn.title=collapsed?'Развернуть меню':'Свернуть меню';
