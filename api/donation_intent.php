@@ -17,6 +17,20 @@ if(!verify_turnstile($turnstile)) json_out(['error'=>'Проверка безо�
 rate_limit('donation_intent_'.$slug,12,60);
 $p=donation_profile_by_slug($slug);
 if(!$p) json_out(['error'=>'Donation page not found'],404);
+
+$owner=null;
+if(!empty($p['user_id'])){
+    $st=$pdo->prepare('SELECT * FROM users WHERE id=? AND is_active=1 LIMIT 1');
+    $st->execute([(int)$p['user_id']]);
+    $owner=$st->fetch() ?: null;
+}
+$ownerLanguage=donation_profile_language($owner);
+$ownerRegion=donation_provider_region($ownerLanguage);
+$provider=$ownerRegion==='ru'?(string)($p['payment_method_ru']??'yookassa'):(string)($p['payment_method_intl']??'paypal');
+$basePaymentUrl=$ownerRegion==='ru'?(string)($p['payment_url_ru']??''):(string)($p['payment_url_intl']??'');
+if($basePaymentUrl==='') $basePaymentUrl=(string)($p['payment_url']??'');
+if($basePaymentUrl==='') json_out(['error'=>'Стример ещё не настроил платёжный агрегатор'],409);
+if($ownerRegion!=='ru' && $provider!=='paypal') json_out(['error'=>'Для этого профиля доступна международная оплата через PayPal'],409);
 if($name==='')$name='Аноним';
 $name=mb_substr($name,0,80);
 $message=mb_substr($message,0,500);
@@ -26,13 +40,5 @@ $amount=round($amount,2);
 $publicId=bin2hex(random_bytes(16));
 $s=$pdo->prepare('INSERT INTO creator_donation_intents(profile_id,public_id,donor_name,message,amount,currency,status) VALUES(?,?,?,?,?,?,?)');
 $s->execute([(int)$p['id'],$publicId,$name,$message,$amount,$p['currency'],'pending']);
-$payUrl=donation_append_reference((string)$p['payment_url'],$publicId);
-json_out([
- 'ok'=>true,
- 'id'=>$publicId,
- 'status'=>'pending',
- 'amount'=>number_format($amount,2,'.',''),
- 'currency'=>$p['currency'],
- 'payment_url'=>$payUrl,
- 'message'=>'Заявка создана. Завершите оплату на странице выбранного платёжного сервиса.'
-]);
+$payUrl=donation_append_reference($basePaymentUrl,$publicId);
+json_out(['ok'=>true,'id'=>$publicId,'status'=>'pending','amount'=>number_format($amount,2,'.',''),'currency'=>$p['currency'],'provider'=>$provider,'profile_language'=>$ownerLanguage,'payment_url'=>$payUrl,'message'=>'Заявка создана. Завершите оплату на странице выбранного платёжного сервиса.']);
