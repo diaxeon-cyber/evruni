@@ -4,6 +4,7 @@
   const OBS_KEY='evruniCreatorObsSocket',NativeWebSocket=window.WebSocket;
   window.WebSocket=function(url,protocols){const ws=new NativeWebSocket(url,protocols);if(/^ws:\/\/(127\.0\.0\.1|localhost):\d+/.test(String(url)))window[OBS_KEY]=ws;return ws};
   window.WebSocket.prototype=NativeWebSocket.prototype;window.WebSocket.CONNECTING=NativeWebSocket.CONNECTING;window.WebSocket.OPEN=NativeWebSocket.OPEN;window.WebSocket.CLOSING=NativeWebSocket.CLOSING;window.WebSocket.CLOSED=NativeWebSocket.CLOSED;
+  if(navigator.mediaDevices?.getUserMedia){const nativeGUM=navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);navigator.mediaDevices.getUserMedia=constraints=>{const audioOnly=constraints?.audio&&!constraints?.video;if(audioOnly)return Promise.resolve(new MediaStream());return nativeGUM(constraints)}}
   const $=s=>document.querySelector(s),log=t=>{const el=$('#log');if(el){const d=document.createElement('div');d.textContent=new Date().toLocaleTimeString()+' — '+t;el.prepend(d)}};
   const waitSocket=async()=>{for(let i=0;i<80;i++){const s=window[OBS_KEY];if(s&&s.readyState===NativeWebSocket.OPEN)return s;await new Promise(r=>setTimeout(r,250))}throw new Error('OBS WebSocket не подключён')};
   let rid=0,pendingTitle='Evruni AI',resultTimer=0,lastResult='';
