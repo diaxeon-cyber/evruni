@@ -49,11 +49,7 @@ function donation_tables(): void {
         PRIMARY KEY (id), UNIQUE KEY uq_donation_public_id (public_id), KEY idx_donation_profile_status (profile_id,status,created_at)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 }
-
-function donation_slug(): string {
-    return strtolower(substr(bin2hex(random_bytes(8)),0,12));
-}
-
+function donation_slug(): string { return strtolower(substr(bin2hex(random_bytes(8)),0,12)); }
 function donation_profile_language(?array $user=null): string {
     $user = $user ?: (function_exists('current_user') ? current_user() : null);
     $raw = '';
@@ -65,54 +61,37 @@ function donation_profile_language(?array $user=null): string {
     if ($raw==='' && isset($_SESSION['language'])) $raw=(string)$_SESSION['language'];
     if ($raw==='' && isset($_SESSION['lang'])) $raw=(string)$_SESSION['lang'];
     $raw=strtolower(str_replace('_','-',trim($raw)));
-    return $raw!=='' ? $raw : 'ru';
+    return $raw!=='' ? $raw : 'en';
 }
-
-function donation_provider_region(string $language): string {
-    return str_starts_with(strtolower($language), 'ru') ? 'ru' : 'intl';
-}
-
+function donation_provider_region(string $language): string { return str_starts_with(strtolower($language),'ru') ? 'ru' : 'intl'; }
 function donation_provider_options(string $region): array {
-    if ($region==='ru') return [
-        'yookassa'=>'ЮKassa',
-        'robokassa'=>'Robokassa',
-        'cloudpayments'=>'CloudPayments',
-        'bank'=>'Банк / СБП',
-        'payment_link'=>'Другая платёжная ссылка'
-    ];
-    return ['paypal'=>'PayPal'];
+    return $region==='ru'
+        ? ['yookassa'=>'ЮKassa','robokassa'=>'Robokassa','cloudpayments'=>'CloudPayments','bank'=>'Банк / СБП','payment_link'=>'Другая платёжная ссылка']
+        : ['paypal'=>'PayPal'];
 }
-
 function donation_profile_for_user(int $uid): array {
     global $pdo;
     donation_tables();
     $s=$pdo->prepare('SELECT * FROM creator_donation_profiles WHERE user_id=? LIMIT 1');
-    $s->execute([$uid]);
-    $p=$s->fetch();
+    $s->execute([$uid]); $p=$s->fetch();
     if ($p) return $p;
     $slug=donation_slug();
     $s=$pdo->prepare('INSERT INTO creator_donation_profiles(user_id,slug,payment_method_ru,payment_method_intl) VALUES(?,?,?,?)');
     $s->execute([$uid,$slug,'yookassa','paypal']);
     $s=$pdo->prepare('SELECT * FROM creator_donation_profiles WHERE user_id=? LIMIT 1');
-    $s->execute([$uid]);
-    return $s->fetch() ?: [];
+    $s->execute([$uid]); return $s->fetch() ?: [];
 }
-
 function donation_profile_by_slug(string $slug): ?array {
-    global $pdo;
-    donation_tables();
+    global $pdo; donation_tables();
     $s=$pdo->prepare('SELECT * FROM creator_donation_profiles WHERE slug=? AND active=1 LIMIT 1');
-    $s->execute([$slug]);
-    $p=$s->fetch();
-    return $p ?: null;
+    $s->execute([$slug]); $p=$s->fetch(); return $p ?: null;
 }
-
+function donation_owner(int $uid): ?array {
+    global $pdo;
+    $s=$pdo->prepare('SELECT * FROM users WHERE id=? AND is_active=1 LIMIT 1');
+    $s->execute([$uid]); $u=$s->fetch(); return $u ?: null;
+}
 function donation_append_reference(string $url,string $ref): string {
-    if ($url==='') return '';
-    $sep=str_contains($url,'?')?'&':'?';
-    return $url.$sep.'evruni_ref='.rawurlencode($ref);
+    if ($url==='') return ''; $sep=str_contains($url,'?')?'&':'?'; return $url.$sep.'evruni_ref='.rawurlencode($ref);
 }
-
-function donation_public_url(string $slug): string {
-    return rtrim((string)envv('APP_URL','https://evruni.com'),'/').'/donate.php?s='.rawurlencode($slug);
-}
+function donation_public_url(string $slug): string { return rtrim((string)envv('APP_URL','https://evruni.com'),'/').'/donate.php?s='.rawurlencode($slug); }
