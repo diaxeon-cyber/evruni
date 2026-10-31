@@ -82,9 +82,19 @@ function donation_profile_for_user(int $uid): array {
     $s->execute([$uid]); return $s->fetch() ?: [];
 }
 function donation_profile_by_slug(string $slug): ?array {
-    global $pdo; donation_tables();
+    global $pdo;
+    donation_tables();
+    $slug=trim(strtolower($slug));
+    if ($slug==='') return null;
     $s=$pdo->prepare('SELECT * FROM creator_donation_profiles WHERE slug=? AND active=1 LIMIT 1');
-    $s->execute([$slug]); $p=$s->fetch(); return $p ?: null;
+    $s->execute([$slug]);
+    $p=$s->fetch();
+    if ($p) return $p;
+    // Compatibility: an older generated link must not break because of a stale active flag.
+    $s=$pdo->prepare('SELECT * FROM creator_donation_profiles WHERE slug=? LIMIT 1');
+    $s->execute([$slug]);
+    $p=$s->fetch();
+    return $p ?: null;
 }
 function donation_owner(int $uid): ?array {
     global $pdo;
