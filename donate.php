@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__.'/_private/config/config.php';
+require_once ROOT_PATH.'/_private/lib/security.php';
 require_once ROOT_PATH.'/_private/lib/donations.php';
 $slug=trim((string)($_GET['s']??''));
 $p=$slug!==''?donation_profile_by_slug($slug):null;
