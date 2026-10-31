@@ -16,6 +16,10 @@ function donation_tables(): void {
         max_amount DECIMAL(12,2) NULL,
         payment_method VARCHAR(32) NOT NULL DEFAULT 'payment_link',
         payment_url TEXT NULL,
+        payment_method_ru VARCHAR(32) NOT NULL DEFAULT 'yookassa',
+        payment_url_ru TEXT NULL,
+        payment_method_intl VARCHAR(32) NOT NULL DEFAULT 'paypal',
+        payment_url_intl TEXT NULL,
         active TINYINT(1) NOT NULL DEFAULT 1,
         overlay_duration INT UNSIGNED NOT NULL DEFAULT 8,
         overlay_title VARCHAR(120) NOT NULL DEFAULT 'Новый донат',
@@ -25,6 +29,11 @@ function donation_tables(): void {
         PRIMARY KEY (id), UNIQUE KEY uq_donation_user (user_id), UNIQUE KEY uq_donation_slug (slug),
         KEY idx_donation_active_slug (slug, active)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    $columns = $pdo->query("SHOW COLUMNS FROM creator_donation_profiles")->fetchAll(PDO::FETCH_COLUMN);
+    if (!in_array('payment_method_ru', $columns, true)) $pdo->exec("ALTER TABLE creator_donation_profiles ADD payment_method_ru VARCHAR(32) NOT NULL DEFAULT 'yookassa'");
+    if (!in_array('payment_url_ru', $columns, true)) $pdo->exec("ALTER TABLE creator_donation_profiles ADD payment_url_ru TEXT NULL");
+    if (!in_array('payment_method_intl', $columns, true)) $pdo->exec("ALTER TABLE creator_donation_profiles ADD payment_method_intl VARCHAR(32) NOT NULL DEFAULT 'paypal'");
+    if (!in_array('payment_url_intl', $columns, true)) $pdo->exec("ALTER TABLE creator_donation_profiles ADD payment_url_intl TEXT NULL");
     $pdo->exec("CREATE TABLE IF NOT EXISTS creator_donation_intents (
         id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
         profile_id BIGINT UNSIGNED NOT NULL,
@@ -45,6 +54,35 @@ function donation_slug(): string {
     return strtolower(substr(bin2hex(random_bytes(8)),0,12));
 }
 
+function donation_profile_language(?array $user=null): string {
+    $user = $user ?: (function_exists('current_user') ? current_user() : null);
+    $raw = '';
+    if (is_array($user)) {
+        foreach (['language','lang','locale','preferred_language'] as $key) {
+            if (!empty($user[$key])) { $raw=(string)$user[$key]; break; }
+        }
+    }
+    if ($raw==='' && isset($_SESSION['language'])) $raw=(string)$_SESSION['language'];
+    if ($raw==='' && isset($_SESSION['lang'])) $raw=(string)$_SESSION['lang'];
+    $raw=strtolower(str_replace('_','-',trim($raw)));
+    return $raw!=='' ? $raw : 'ru';
+}
+
+function donation_provider_region(string $language): string {
+    return str_starts_with(strtolower($language), 'ru') ? 'ru' : 'intl';
+}
+
+function donation_provider_options(string $region): array {
+    if ($region==='ru') return [
+        'yookassa'=>'ЮKassa',
+        'robokassa'=>'Robokassa',
+        'cloudpayments'=>'CloudPayments',
+        'bank'=>'Банк / СБП',
+        'payment_link'=>'Другая платёжная ссылка'
+    ];
+    return ['paypal'=>'PayPal'];
+}
+
 function donation_profile_for_user(int $uid): array {
     global $pdo;
     donation_tables();
@@ -53,8 +91,8 @@ function donation_profile_for_user(int $uid): array {
     $p=$s->fetch();
     if ($p) return $p;
     $slug=donation_slug();
-    $s=$pdo->prepare('INSERT INTO creator_donation_profiles(user_id,slug) VALUES(?,?)');
-    $s->execute([$uid,$slug]);
+    $s=$pdo->prepare('INSERT INTO creator_donation_profiles(user_id,slug,payment_method_ru,payment_method_intl) VALUES(?,?,?,?)');
+    $s->execute([$uid,$slug,'yookassa','paypal']);
     $s=$pdo->prepare('SELECT * FROM creator_donation_profiles WHERE user_id=? LIMIT 1');
     $s->execute([$uid]);
     return $s->fetch() ?: [];
@@ -69,12 +107,12 @@ function donation_profile_by_slug(string $slug): ?array {
     return $p ?: null;
 }
 
-function donation_public_url(string $slug): string {
-    return rtrim((string)envv('APP_URL','https://evruni.com'),'/').'/donate.php?s='.rawurlencode($slug);
-}
-
 function donation_append_reference(string $url,string $ref): string {
     if ($url==='') return '';
     $sep=str_contains($url,'?')?'&':'?';
     return $url.$sep.'evruni_ref='.rawurlencode($ref);
+}
+
+function donation_public_url(string $slug): string {
+    return rtrim((string)envv('APP_URL','https://evruni.com'),'/').'/donate.php?s='.rawurlencode($slug);
 }
