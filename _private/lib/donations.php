@@ -94,4 +94,8 @@ function donation_owner(int $uid): ?array {
 function donation_append_reference(string $url,string $ref): string {
     if ($url==='') return ''; $sep=str_contains($url,'?')?'&':'?'; return $url.$sep.'evruni_ref='.rawurlencode($ref);
 }
-function donation_public_url(string $slug): string { return rtrim((string)envv('APP_URL','https://evruni.com'),'/').'/donate.php?s='.rawurlencode($slug); }
+function donation_public_url(string $slug): string {
+    $slug=trim($slug);
+    if ($slug==='') return 'https://evruni.com/donate.php';
+    return 'https://evruni.com/donate.php?s='.rawurlencode($slug);
+}
