@@ -22,8 +22,11 @@ ob_start(static function (string $html) use ($requestPath): string {
         return $html;
     }
 
-    if ($requestPath === '/creator-tools.php' && strpos($html, '/assets/creator-tools-bridge.js') === false && strpos($html, '</head>') !== false) {
-        $html = str_replace('</head>', '<script src="/assets/creator-tools-bridge.js?v=1"></script></head>', $html);
+    if ($requestPath === '/creator-tools.php') {
+        $html = str_replace('citeturn531270search2turn531270search0', '', $html);
+        if (strpos($html, '/assets/creator-tools-bridge.js') === false && strpos($html, '</head>') !== false) {
+            $html = str_replace('</head>', '<script src="/assets/creator-tools-bridge.js?v=2"></script></head>', $html);
+        }
     }
     return $html;
 });
