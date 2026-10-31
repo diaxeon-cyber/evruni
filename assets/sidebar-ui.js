@@ -18,8 +18,26 @@
       .sidebar.sidebar-collapsed .sidebar-collapse-toggle{font-size:0;padding:8px 4px}.sidebar.sidebar-collapsed .sidebar-collapse-toggle:after{content:'›';font-size:20px;line-height:1}.creator-tools-nav{overflow:visible!important}.creator-beta-badge{margin-left:auto;padding:3px 6px;border-radius:999px;border:1px solid rgba(103,232,255,.22);background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(56,189,248,.12));color:#91eaff;font-size:8px;font-weight:800;letter-spacing:.1em;line-height:1}.sidebar.sidebar-collapsed .creator-beta-badge{display:none}
       `;document.head.appendChild(style)
     }
+
+    // Creator Tools is inserted here rather than through PHP output rewriting.
+    // This keeps the sidebar stable even when the hosting PHP user-ini layer is disabled.
     let creator=document.querySelector('.nav[data-view="creator-tools"]');
-    if(creator){creator.classList.add('creator-tools-nav');if(!creator.querySelector('.creator-beta-badge')){const badge=document.createElement('b');badge.className='creator-beta-badge';badge.textContent='BETA';creator.appendChild(badge)}}
+    if(!creator){
+      const anchor=sidebar.querySelector('.nav[data-view="sandbox"]');
+      if(anchor){
+        creator=document.createElement('button');
+        creator.type='button';
+        creator.className='nav creator-tools-nav';
+        creator.dataset.view='creator-tools';
+        creator.innerHTML='<span>🎥</span><span data-i18n="nav_creator_tools">Creator Tools</span><b class="creator-beta-badge">BETA</b>';
+        anchor.insertAdjacentElement('afterend',creator);
+        creator.addEventListener('click',()=>{window.location.href='/creator-tools.php'});
+      }
+    }else{
+      creator.classList.add('creator-tools-nav');
+      if(!creator.querySelector('.creator-beta-badge')){const badge=document.createElement('b');badge.className='creator-beta-badge';badge.textContent='BETA';creator.appendChild(badge)}
+    }
+
     let btn=sidebar.querySelector('.sidebar-collapse-toggle');
     if(!btn){btn=document.createElement('button');btn.type='button';btn.className='sidebar-collapse-toggle';const logo=sidebar.querySelector('.logo');if(logo)logo.insertAdjacentElement('afterend',btn);else sidebar.prepend(btn);btn.addEventListener('click',()=>{collapsed=!collapsed;try{localStorage.setItem(KEY,collapsed?'1':'0')}catch(_){ }apply()})}
     function apply(){sidebar.classList.toggle('sidebar-collapsed',collapsed);if(app)app.classList.toggle('sidebar-menu-collapsed',collapsed);btn.textContent=collapsed?'':'Свернуть меню';btn.setAttribute('aria-label',collapsed?'Развернуть меню':'Свернуть меню');btn.title=collapsed?'Развернуть меню':'Свернуть меню'}
