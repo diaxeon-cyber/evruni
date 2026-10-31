@@ -103,6 +103,12 @@ JS;
         if (strpos($html, '/assets/creator-tools-bridge.js') === false && strpos($html, '</head>') !== false) {
             $html = str_replace('</head>', '<script src="/assets/creator-tools-bridge.js?v=3"></script></head>', $html);
         }
+        if (strpos($html, '/assets/creator-film-bridge.js') === false && strpos($html, '</body>') !== false) {
+            $html = str_replace('</body>', '<script src="/assets/creator-film-bridge.js?v=1"></script></body>', $html);
+        }
+        if (strpos($html, '/assets/creator-film-guard.js') === false && strpos($html, '</body>') !== false) {
+            $html = str_replace('</body>', '<script src="/assets/creator-film-guard.js?v=1"></script></body>', $html);
+        }
     }
     return $html;
 });
