@@ -13,12 +13,19 @@ if ($requestPath !== '/') {
 }
 
 ob_start(static function (string $html): string {
-    if (strpos($html, 'data-view="sandbox"') === false || strpos($html, 'href="/creator-tools.php"') !== false) {
+    if (strpos($html, 'data-view="sandbox"') === false) {
         return $html;
     }
 
-    $needle = '<button class="nav" data-view="sandbox"><span>◌</span> <span data-i18n="nav_sandbox">Sandbox</span></button>';
-    $item = $needle . '<a class="nav" href="/creator-tools.php"><span>🎥</span> <span data-i18n="nav_creator_tools">Creator Tools</span></a>';
+    if (strpos($html, 'data-view="creator-tools"') === false) {
+        $needle = '<button class="nav" data-view="sandbox"><span>◌</span> <span data-i18n="nav_sandbox">Sandbox</span></button>';
+        $item = $needle . '<button class="nav creator-tools-nav" type="button" data-view="creator-tools"><span>🎥</span> <span data-i18n="nav_creator_tools">Creator Tools</span></button>';
+        $html = str_replace($needle, $item, $html);
+    }
 
-    return str_replace($needle, $item, $html);
+    if (strpos($html, '/assets/creator-tools-view.js') === false && strpos($html, '</body>') !== false) {
+        $html = str_replace('</body>', '<script src="/assets/creator-tools-view.js?v=1"></script></body>', $html);
+    }
+
+    return $html;
 });
