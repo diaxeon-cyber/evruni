@@ -14,79 +14,56 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
-      - name: Restore dashboard header/profile without touching other features
+      - name: Restore Creator Tools and collapse button
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
           p=Path('index.php')
-          # The previous dashboard version (e9ed4e7) contains the complete working header,
-          # profile menu, search and all dashboard content. Restore that exact file first.
-          import subprocess
-          subprocess.run(['git','checkout','e9ed4e7b93fb33115b124d6083c862fa62a63b39','--','index.php'],check=True)
           s=p.read_text(encoding='utf-8')
-
           marker='<button class="nav bonus-nav" data-view="bonuses">'
           item='<button class="nav creator-tools-nav" type="button" data-view="creator-tools"><span>🎥</span> <span data-i18n="nav_creator_tools">Creator Tools</span><b class="creator-beta-badge">BETA</b></button>'
           if 'data-view="creator-tools"' not in s:
               if marker not in s:
                   raise SystemExit('sandbox/bonuses menu marker not found')
-              s=s.replace(marker,item+marker,1)
-
-          css='''<style id="evruni-sidebar-fallback-css">.sidebar{transition:width .24s ease,flex-basis .24s ease,padding .24s ease}.sidebar.sidebar-collapsed{width:84px;flex-basis:84px;padding-left:10px;padding-right:10px}.sidebar.sidebar-collapsed .logo-copy{display:none}.sidebar.sidebar-collapsed .nav{justify-content:center;padding-left:8px;padding-right:8px;gap:0}.sidebar.sidebar-collapsed .nav>span:not(:first-child),.sidebar.sidebar-collapsed .creator-beta-badge{display:none}.sidebar-collapse-toggle{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:0 0 10px;padding:8px 10px;border:1px solid rgba(157,170,204,.12);border-radius:12px;background:rgba(255,255,255,.025);color:#8f9ab2;cursor:pointer;font-size:12px;line-height:1.2}.sidebar-collapse-toggle .collapse-label{white-space:nowrap}.sidebar.sidebar-collapsed .sidebar-collapse-toggle{font-size:0;padding:8px 4px}.sidebar.sidebar-collapsed .sidebar-collapse-toggle .collapse-label{display:none}.sidebar.sidebar-collapsed .sidebar-collapse-toggle:after{content:"›";font-size:18px;line-height:1}.creator-beta-badge{margin-left:auto;padding:3px 6px;border-radius:999px;border:1px solid rgba(103,232,255,.22);background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(56,189,248,.12));color:#91eaff;font-size:8px;font-weight:800;letter-spacing:.1em;line-height:1}</style>'''
-          script='''<script id="evruni-sidebar-fallback">(function(){function init(){var sidebar=document.querySelector('.sidebar');if(!sidebar)return;var nav=document.querySelector('.creator-tools-nav');if(nav)nav.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();window.location.href='/creator-tools.php'},true);var btn=sidebar.querySelector('.sidebar-collapse-toggle');if(!btn){btn=document.createElement('button');btn.type='button';btn.className='sidebar-collapse-toggle';btn.innerHTML='<span aria-hidden="true">‹</span><span class="collapse-label">Свернуть меню</span>';btn.title='Свернуть меню';btn.setAttribute('aria-label','Свернуть меню');var logo=sidebar.querySelector('.logo');if(logo)logo.insertAdjacentElement('afterend',btn);else sidebar.prepend(btn);btn.addEventListener('click',function(){var c=!sidebar.classList.contains('sidebar-collapsed');sidebar.classList.toggle('sidebar-collapsed',c);btn.innerHTML=c?'<span aria-hidden="true">›</span><span class="collapse-label">Развернуть меню</span>':'<span aria-hidden="true">‹</span><span class="collapse-label">Свернуть меню</span>';btn.title=c?'Развернуть меню':'Свернуть меню';btn.setAttribute('aria-label',btn.title);try{localStorage.setItem('evruni_sidebar_collapsed_v1',c?'1':'0')}catch(_){}},false)}var collapsed=false;try{var saved=localStorage.getItem('evruni_sidebar_collapsed_v1');if(saved!==null)collapsed=saved==='1'}catch(_){}sidebar.classList.toggle('sidebar-collapsed',collapsed);btn.innerHTML=collapsed?'<span aria-hidden="true">›</span><span class="collapse-label">Развернуть меню</span>':'<span aria-hidden="true">‹</span><span class="collapse-label">Свернуть меню</span>';btn.title=collapsed?'Развернуть меню':'Свернуть меню';btn.setAttribute('aria-label',btn.title)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init()})();</script>'''
-          if 'id="evruni-sidebar-fallback-css"' not in s:
-              s=s.replace('</body>',css+'\n'+script+'\n</body>',1)
+              s=s.replace(marker, item+marker, 1)
+          script=r'''<script id="evruni-sidebar-fallback">
+          (function(){
+            function init(){
+              var sidebar=document.querySelector('.sidebar');
+              if(!sidebar)return;
+              var nav=document.querySelector('.creator-tools-nav');
+              if(nav){
+                nav.addEventListener('click',function(e){
+                  e.preventDefault();
+                  e.stopImmediatePropagation();
+                  window.location.href='/creator-tools.php';
+                },true);
+              }
+              if(!document.getElementById('evruni-sidebar-fallback-css')){
+                var st=document.createElement('style');st.id='evruni-sidebar-fallback-css';st.textContent='.sidebar{transition:width .24s ease,flex-basis .24s ease,padding .24s ease}.sidebar.sidebar-collapsed{width:84px;flex-basis:84px;padding-left:10px;padding-right:10px}.sidebar.sidebar-collapsed .logo-copy{display:none}.sidebar.sidebar-collapsed .nav{justify-content:center;padding-left:8px;padding-right:8px;gap:0}.sidebar.sidebar-collapsed .nav>span:not(:first-child),.sidebar.sidebar-collapsed .creator-beta-badge{display:none}.sidebar-collapse-toggle{width:100%;margin:0 0 10px;padding:8px 10px;border:1px solid rgba(157,170,204,.12);border-radius:12px;background:rgba(255,255,255,.025);color:#8f9ab2;cursor:pointer;font-size:12px}.sidebar.sidebar-collapsed .sidebar-collapse-toggle{font-size:0;padding:8px 4px}.sidebar.sidebar-collapsed .sidebar-collapse-toggle:after{content:"›";font-size:18px;line-height:1}.creator-beta-badge{margin-left:auto;padding:3px 6px;border-radius:999px;border:1px solid rgba(103,232,255,.22);background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(56,189,248,.12));color:#91eaff;font-size:8px;font-weight:800;letter-spacing:.1em;line-height:1}';document.head.appendChild(st);
+              }
+              var btn=sidebar.querySelector('.sidebar-collapse-toggle');
+              if(!btn){
+                btn=document.createElement('button');btn.type='button';btn.className='sidebar-collapse-toggle';btn.textContent='';btn.title='Развернуть меню';btn.setAttribute('aria-label','Развернуть меню');
+                var logo=sidebar.querySelector('.logo');if(logo)logo.insertAdjacentElement('afterend',btn);else sidebar.prepend(btn);
+                btn.addEventListener('click',function(){var c=!sidebar.classList.contains('sidebar-collapsed');sidebar.classList.toggle('sidebar-collapsed',c);btn.title=c?'Развернуть меню':'Свернуть меню';btn.setAttribute('aria-label',btn.title);try{localStorage.setItem('evruni_sidebar_collapsed_v1',c?'1':'0')}catch(_){}},false);
+              }
+              var collapsed=true;try{var saved=localStorage.getItem('evruni_sidebar_collapsed_v1');if(saved!==null)collapsed=saved==='1'}catch(_){}
+              sidebar.classList.toggle('sidebar-collapsed',collapsed);
+            }
+            if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+          })();
+          </script>'''
+          if 'id="evruni-sidebar-fallback"' not in s:
+              s=s.replace('</body>',script+'</body>',1)
           p.write_text(s,encoding='utf-8')
           PY
 
-          # Restore the workflow itself to its normal stable version in the same commit.
-          cat > .github/workflows/fix-sidebar.yml <<'YAML'
-          name: Fix Evruni sidebar
-
-          on:
-            push:
-              branches: [main]
-
-          permissions:
-            contents: write
-
-          jobs:
-            fix:
-              if: !contains(github.event.head_commit.message, '[sidebar-fix]')
-              runs-on: ubuntu-latest
-              steps:
-                - uses: actions/checkout@v4
-                  with:
-                    fetch-depth: 1
-
-                - name: Restore Creator Tools and collapse button
-                  shell: bash
-                  run: |
-                    python3 - <<'PY'
-                    from pathlib import Path
-                    p=Path('index.php')
-                    s=p.read_text(encoding='utf-8')
-                    marker='<button class="nav bonus-nav" data-view="bonuses">'
-                    item='<button class="nav creator-tools-nav" type="button" data-view="creator-tools"><span>🎥</span> <span data-i18n="nav_creator_tools">Creator Tools</span><b class="creator-beta-badge">BETA</b></button>'
-                    if 'data-view="creator-tools"' not in s:
-                        if marker not in s: raise SystemExit('sandbox/bonuses menu marker not found')
-                        s=s.replace(marker,item+marker,1)
-                    if 'id="evruni-sidebar-fallback-css"' not in s:
-                        s=s.replace('</body>','<style id="evruni-sidebar-fallback-css">.sidebar{transition:width .24s ease,flex-basis .24s ease,padding .24s ease}.sidebar.sidebar-collapsed{width:84px;flex-basis:84px;padding-left:10px;padding-right:10px}.sidebar.sidebar-collapsed .logo-copy{display:none}.sidebar.sidebar-collapsed .nav{justify-content:center;padding-left:8px;padding-right:8px;gap:0}.sidebar.sidebar-collapsed .nav>span:not(:first-child),.sidebar.sidebar-collapsed .creator-beta-badge{display:none}.sidebar-collapse-toggle{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:0 0 10px;padding:8px 10px;border:1px solid rgba(157,170,204,.12);border-radius:12px;background:rgba(255,255,255,.025);color:#8f9ab2;cursor:pointer;font-size:12px;line-height:1.2}.sidebar-collapse-toggle .collapse-label{white-space:nowrap}.sidebar.sidebar-collapsed .sidebar-collapse-toggle{font-size:0;padding:8px 4px}.sidebar.sidebar-collapsed .sidebar-collapse-toggle .collapse-label{display:none}.sidebar.sidebar-collapsed .sidebar-collapse-toggle:after{content:"›";font-size:18px;line-height:1}.creator-beta-badge{margin-left:auto;padding:3px 6px;border-radius:999px;border:1px solid rgba(103,232,255,.22);background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(56,189,248,.12));color:#91eaff;font-size:8px;font-weight:800;letter-spacing:.1em;line-height:1}</style>\n<script id="evruni-sidebar-fallback">(function(){function init(){var sidebar=document.querySelector('.sidebar');if(!sidebar)return;var nav=document.querySelector('.creator-tools-nav');if(nav)nav.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();window.location.href='/creator-tools.php'},true);var btn=sidebar.querySelector('.sidebar-collapse-toggle');if(!btn){btn=document.createElement('button');btn.type='button';btn.className='sidebar-collapse-toggle';btn.innerHTML='<span aria-hidden="true">‹</span><span class="collapse-label">Свернуть меню</span>';btn.title='Свернуть меню';btn.setAttribute('aria-label','Свернуть меню');var logo=sidebar.querySelector('.logo');if(logo)logo.insertAdjacentElement('afterend',btn);else sidebar.prepend(btn);btn.addEventListener('click',function(){var c=!sidebar.classList.contains('sidebar-collapsed');sidebar.classList.toggle('sidebar-collapsed',c);btn.innerHTML=c?'<span aria-hidden="true">›</span><span class="collapse-label">Развернуть меню</span>':'<span aria-hidden="true">‹</span><span class="collapse-label">Свернуть меню</span>';btn.title=c?'Развернуть меню':'Свернуть меню';btn.setAttribute('aria-label',btn.title);try{localStorage.setItem('evruni_sidebar_collapsed_v1',c?'1':'0')}catch(_){}},false)}var collapsed=false;try{var saved=localStorage.getItem('evruni_sidebar_collapsed_v1');if(saved!==null)collapsed=saved==='1'}catch(_){}sidebar.classList.toggle('sidebar-collapsed',collapsed);btn.innerHTML=collapsed?'<span aria-hidden="true">›</span><span class="collapse-label">Развернуть меню</span>':'<span aria-hidden="true">‹</span><span class="collapse-label">Свернуть меню</span>';btn.title=collapsed?'Развернуть меню':'Свернуть меню';btn.setAttribute('aria-label',btn.title)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init()})();</script>\n</body>',1)
-                    p.write_text(s,encoding='utf-8')
-                    PY
-                    git config user.name "Evruni Bot"
-                    git config user.email "actions@users.noreply.github.com"
-                    git add index.php
-                    git diff --cached --quiet || git commit -m "Fix sidebar Creator Tools and collapse [sidebar-fix]"
-                    git push
-          YAML
-
           git config user.name "Evruni Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add index.php .github/workflows/fix-sidebar.yml
-          git commit -m "Restore dashboard profile and full header [sidebar-fix]"
+          git add index.php
+          git diff --cached --quiet || git commit -m "Fix sidebar Creator Tools and collapse [sidebar-fix]"
           git push
