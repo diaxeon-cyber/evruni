@@ -1,6 +1,9 @@
 ErrorDocument 404 /404.html
 RewriteEngine On
 
+# Public root uses the restored classic landing page. Logged-in users are redirected by PHP to /index.php.
+RewriteRule ^$ public_landing.php [L]
+
 # Creator Tools is a real page; do not redirect it to the legacy guard page.
 
 # Load the stable sidebar enhancement without relying on PHP auto_prepend/user-ini support.
