@@ -11,7 +11,7 @@ if (PHP_SAPI === 'cli' || ($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') {
 $requestPath = parse_url((string)($_SERVER['REQUEST_URI'] ?? '/'), PHP_URL_PATH);
 
 ob_start(static function (string $html) use ($requestPath): string {
-    if ($requestPath === '/') {
+    if (in_array($requestPath, ['/', '/index.php'], true)) {
         if (strpos($html, 'data-view="sandbox"') !== false && strpos($html, 'data-view="creator-tools"') === false) {
             $needle = '<button class="nav" data-view="sandbox"><span>◌</span> <span data-i18n="nav_sandbox">Sandbox</span></button>';
             $item = $needle . '<button class="nav creator-tools-nav" type="button" data-view="creator-tools"><span>🎥</span> <span data-i18n="nav_creator_tools">Creator Tools</span><b class="creator-beta-badge">BETA</b></button>';
