@@ -3,6 +3,12 @@ RewriteEngine On
 
 # Creator Tools is a real page; do not redirect it to the legacy guard page.
 
+# Load the stable sidebar enhancement without relying on PHP auto_prepend/user-ini support.
+<IfModule mod_substitute.c>
+    AddOutputFilterByType SUBSTITUTE text/html
+    Substitute "s|</body>|<script src=\"/assets/sidebar-ui.js?v=5\"></script></body>|ni"
+</IfModule>
+
 # Hide PHP extensions
 RewriteCond %{THE_REQUEST} \s/+login\.php(?:[?\s]) [NC]
 RewriteRule ^login\.php$ /login [R=301,L]
