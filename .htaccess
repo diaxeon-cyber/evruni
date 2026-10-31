@@ -1,6 +1,9 @@
 ErrorDocument 404 /404.html
 RewriteEngine On
 
+# Creator Tools now uses the focused Creator Guard workspace.
+RewriteRule ^creator-tools\.php$ /creator-guard.php [R=302,L]
+
 # Hide PHP extensions
 RewriteCond %{THE_REQUEST} \s/+login\.php(?:[?\s]) [NC]
 RewriteRule ^login\.php$ /login [R=301,L]
