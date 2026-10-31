@@ -26,7 +26,7 @@ $url=trim((string)($in['payment_url']??''));
 $duration=max(3,min(30,(int)($in['overlay_duration']??8)));
 $overlayTitle=trim((string)($in['overlay_title']??'Новый донат'));
 $template=trim((string)($in['overlay_template']??'💜 {name} поддержал на {amount} {currency}'));
-$allowed=['yookassa','robokassa','cloudpayments','bank','payment_link'];
+$allowed=['yookassa','robokassa','cloudpayments','paypal','bank','payment_link','other'];
 if(!in_array($method,$allowed,true)) json_out(['error'=>'Неизвестный платёжный агрегатор'],422);
 if($title===''||mb_strlen($title)>120||$description===''||mb_strlen($description)>500) json_out(['error'=>'Некорректный текст'],422);
 if(strlen($currency)<3||strlen($currency)>6) json_out(['error'=>'Некорректная валюта'],422);
