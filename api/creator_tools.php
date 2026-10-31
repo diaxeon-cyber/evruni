@@ -14,7 +14,7 @@ if(!is_array($input)) json_out(['error'=>'Invalid JSON'],400);
 $action=trim((string)($input['action']??''));
 $text=trim((string)($input['text']??''));
 $text=function_exists('mb_substr')?mb_substr($text,0,12000):substr($text,0,12000);
-$allowed=['moderate','chatbot','summary','clip_note'];
+$allowed=['moderate','chatbot','summary','translate','shorts','copilot','clip_note'];
 if(!in_array($action,$allowed,true)) json_out(['error'=>'Unknown creator tool'],422);
 if($action==='clip_note') json_out(['ok'=>true,'action'=>$action,'queued'=>true,'message'=>'Момент отмечен. Тяжёлая обработка запускается отдельно.']);
 if($text==='') json_out(['error'=>'Text is required'],422);
@@ -25,10 +25,20 @@ try{
     $cost=max(0.0,(float)($model['credit_cost']??0));
     if($cost>0) wallet_spend((int)$u['id'],$cost,'Creator Tools: '.$action,'creator_tool',null);
     try{
-        if($action==='moderate') $system='You are a stream chat moderator. Return JSON only: {"action":"allow|warn|delete","reason":"short reason"}. Be conservative. Only delete clear spam, harassment, hate, threats, sexual content involving minors, or dangerous illegal instructions.';
-        elseif($action==='chatbot') $system='You are Evruni, a concise friendly stream chat bot. Answer the viewer in Russian unless they clearly use another language. Maximum 2 short sentences. Do not pretend to control the stream.';
-        else $system='You summarize a completed livestream. Return 4 short bullet points: main topics, notable moments, audience interaction, useful follow-up. Do not invent facts.';
-        $r=ai_chat([['role'=>'system','content'=>$system],['role'=>'user','content'=>$text]],$slug,.2,350);
+        if($action==='moderate') {
+            $system='You are an event-driven stream chat moderator. Return JSON only: {"action":"allow|warn|delete","reason":"short reason"}. Be conservative. Delete only clear spam, harassment, hate, threats, sexual content involving minors, or dangerous illegal instructions. Otherwise allow.';
+        } elseif($action==='chatbot') {
+            $system='You are Evruni, a concise friendly stream chat bot. Answer in Russian unless the viewer clearly uses another language. Maximum 2 short sentences. Do not claim to control the stream or invent facts.';
+        } elseif($action==='translate') {
+            $system='Translate the supplied livestream message into the requested target language. Return only the translation, no commentary.';
+        } elseif($action==='shorts') {
+            $system='Turn the supplied stream moment into a short-form video package. Return exactly: HOOK, TITLE, CAPTION, HASHTAGS. Keep each line concise. Do not invent facts not present in the input.';
+        } elseif($action==='copilot') {
+            $system='You are a lightweight livestream copilot. Based only on the supplied event, give one concise useful next action for the streamer. Maximum 2 sentences. Do not claim to continuously watch the stream.';
+        } else {
+            $system='You summarize a completed livestream. Return 4 short bullet points: main topics, notable moments, audience interaction, useful follow-up. Do not invent facts.';
+        }
+        $r=ai_chat([['role'=>'system','content'=>$system],['role'=>'user','content'=>$text]],$slug,.2,500);
         $out=(string)($r['choices'][0]['message']['content']??'');
         if($out==='') throw new RuntimeException('Empty AI response');
         json_out(['ok'=>true,'action'=>$action,'result'=>$out]);
