@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__.'/../_private/config/config.php';
-require_once ROOT_PATH.'_private/lib/security.php';
-require_once ROOT_PATH.'_private/lib/donations.php';
+require_once ROOT_PATH.'/_private/lib/security.php';
+require_once ROOT_PATH.'/_private/lib/donations.php';
 
 $u=require_auth();
 donation_tables();
@@ -14,16 +14,7 @@ if($_SERVER['REQUEST_METHOD']==='GET'){
     $p=donation_profile_for_user((int)$u['id']);
     $activeMethod=$region==='ru'?(string)($p['payment_method_ru']??'yookassa'):(string)($p['payment_method_intl']??'paypal');
     $activeUrl=$region==='ru'?(string)($p['payment_url_ru']??''):(string)($p['payment_url_intl']??'');
-    json_out([
-        'ok'=>true,
-        'profile'=>$p,
-        'public_url'=>donation_public_url((string)$p['slug']),
-        'profile_language'=>$language,
-        'region'=>$region,
-        'provider_options'=>$options,
-        'active_provider'=>$activeMethod,
-        'active_payment_url'=>$activeUrl
-    ]);
+    json_out(['ok'=>true,'profile'=>$p,'public_url'=>donation_public_url((string)$p['slug']),'profile_language'=>$language,'region'=>$region,'provider_options'=>$options,'active_provider'=>$activeMethod,'active_payment_url'=>$activeUrl]);
 }
 
 require_csrf();
@@ -61,13 +52,4 @@ $activeMethod=$region==='ru'?$methodRu:$methodIntl;
 $activeUrl=$region==='ru'?$urlRu:$urlIntl;
 $s->execute([$title,$description,$currency,$min,$max>0?$max:null,$methodRu,$urlRu,$methodIntl,$urlIntl,$activeMethod,$activeUrl,$duration,$overlayTitle,$template,(int)$u['id']]);
 $p=donation_profile_for_user((int)$u['id']);
-json_out([
-    'ok'=>true,
-    'profile'=>$p,
-    'public_url'=>donation_public_url((string)$p['slug']),
-    'profile_language'=>$language,
-    'region'=>$region,
-    'provider_options'=>$options,
-    'active_provider'=>$activeMethod,
-    'active_payment_url'=>$activeUrl
-]);
+json_out(['ok'=>true,'profile'=>$p,'public_url'=>donation_public_url((string)$p['slug']),'profile_language'=>$language,'region'=>$region,'provider_options'=>$options,'active_provider'=>$activeMethod,'active_payment_url'=>$activeUrl]);
