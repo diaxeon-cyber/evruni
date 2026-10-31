@@ -37,7 +37,7 @@ foreach($items as $item){
  $movie=$data[$m[1]]??null;if(!is_array($movie))continue;
  $title=trim((string)($movie['title']??''));if($title==='')continue;
  $scenes=is_array($movie['scenes']??null)?$movie['scenes']:[];
- $up->execute([$m[1],$title,keyf($title],isset($movie['duration'])?(int)$movie['duration']:null,(string)($movie['version']??'theatrical'),'MovieHavenDB','CC BY 4.0',json_encode($scenes,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)]);
+ $up->execute([$m[1],$title,keyf($title),isset($movie['duration'])?(int)$movie['duration']:null,(string)($movie['version']??'theatrical'),'MovieHavenDB','CC BY 4.0',json_encode($scenes,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)]);
  $count++;
 }
 echo "Imported $count film records\n";
