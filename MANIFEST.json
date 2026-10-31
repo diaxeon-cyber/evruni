@@ -1,0 +1,31 @@
+{
+  "name": "Evruni V3.2 Modern UI",
+  "target": "Jino shared hosting",
+  "architecture": "independent direct-provider gateway",
+  "providers": [
+    "OpenAI",
+    "Anthropic",
+    "Google Gemini",
+    "DeepSeek",
+    "Qwen",
+    "Mistral"
+  ],
+  "features": [
+    "multi-provider chat",
+    "local model catalog",
+    "provider_model mapping",
+    "credit-safe charging",
+    "Evruni API keys",
+    "OpenAI-compatible /api/v1/chat/completions",
+    "OpenAI-compatible /api/v1/models",
+    "data masking",
+    "usage analytics",
+    "documents/RAG foundation",
+    "image/video/audio surfaces",
+    "animated custom Evruni design"
+  ],
+  "external_aggregator_dependency": false,
+  "database_migration": "_private/database/migration_v3.sql",
+  "version": "6.3",
+  "dependency_note": "No AI aggregator dependency; providers are configured directly."
+}

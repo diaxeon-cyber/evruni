@@ -1,0 +1,32 @@
+ErrorDocument 404 /404.html
+RewriteEngine On
+
+# Hide PHP extensions
+RewriteCond %{THE_REQUEST} \s/+login\.php(?:[?\s]) [NC]
+RewriteRule ^login\.php$ /login [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+register\.php(?:[?\s]) [NC]
+RewriteRule ^register\.php$ /register [R=301,L]
+
+# Pretty URLs
+RewriteRule ^login/?$ login.php [L]
+RewriteRule ^register/?$ register.php [L]
+
+# Block private files/directories
+RewriteRule ^_private(?:/|$) - [F,L,NC]
+RewriteRule ^\.env(?:.*)$ - [F,L,NC]
+RewriteRule ^\.git(?:/|$) - [F,L,NC]
+
+# Block common sensitive project files
+<FilesMatch "^(?:\.env.*|.*\.sql|.*\.bak|README.*|MANIFEST\.json)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Do not execute scripts in generated media
+<FilesMatch "\.(php|phtml|phar|cgi|pl)$">
+    <If "%{REQUEST_URI} =~ m#^/media/generated/#">
+        Order allow,deny
+        Deny from all
+    </If>
+</FilesMatch>

@@ -1,0 +1,12 @@
+<?php
+declare(strict_types=1);
+require_once __DIR__.'/../../_private/config/config.php';
+require_once ROOT_PATH.'/_private/lib/security.php';
+require_once ROOT_PATH.'/_private/lib/ai.php';
+function api_key_user(): array { global $pdo; $h=$_SERVER['HTTP_AUTHORIZATION']??''; if(!preg_match('/^Bearer\s+(.+)$/i',$h,$m)) json_out(['error'=>['message'=>'Missing API key','type'=>'authentication_error']],401); $raw=trim($m[1]); $hash=hash('sha256',$raw); $s=$pdo->prepare('SELECT * FROM api_keys WHERE key_hash=? AND is_active=1 AND (expires_at IS NULL OR expires_at>NOW())');$s->execute([$hash]);$k=$s->fetch();if(!$k)json_out(['error'=>['message'=>'Invalid API key','type'=>'authentication_error']],401);if($k['budget']!==null && (float)$k['spent']>=(float)$k['budget'])json_out(['error'=>['message'=>'API key budget exceeded','type'=>'rate_limit_error']],429);$u=$pdo->prepare('SELECT * FROM users WHERE id=? AND is_active=1');$u->execute([$k['user_id']]);$user=$u->fetch();if(!$user)json_out(['error'=>['message'=>'User disabled','type'=>'authentication_error']],401);return [$user,$k]; }
+[$user,$key]=api_key_user();
+$payload=json_decode(file_get_contents('php://input'),true)?:[];$model=(string)($payload['model']??envv('AI_DEFAULT_MODEL','aitunnel-auto'));$messages=$payload['messages']??[];
+if(!is_array($messages)||!$messages)json_out(['error'=>['message'=>'messages is required']],422);
+
+$m=ai_model_record($model);$cost=(float)$m['credit_cost'];if((float)$user['credits']<$cost)json_out(['error'=>['message'=>'Insufficient balance','type'=>'insufficient_quota']],402);
+try{$r=ai_chat($messages,$model,(float)($payload['temperature']??.7),isset($payload['max_tokens'])?(int)$payload['max_tokens']:null);$usage=$r['usage']??[];$in=(int)($usage['prompt_tokens']??0);$out=(int)($usage['completion_tokens']??0);spend_credits((int)$user['id'],$cost,'API '.$model,'api_key',(int)$key['id']);$pdo->prepare('UPDATE api_keys SET spent=spent+?,last_used_at=NOW() WHERE id=?')->execute([$cost,$key['id']]);$pdo->prepare('INSERT INTO api_usage(user_id,api_key_id,model_slug,endpoint,input_tokens,output_tokens,cost) VALUES(?,?,?,?,?,?,?)')->execute([$user['id'],$key['id'],$model,'chat/completions',$in,$out,$cost]);header('Content-Type: application/json; charset=utf-8');echo json_encode($r,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);exit;}catch(Throwable $e){json_out(['error'=>['message'=>$e->getMessage(),'type'=>'provider_error']],500);}

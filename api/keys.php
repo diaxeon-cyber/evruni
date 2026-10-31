@@ -1,0 +1,6 @@
+<?php
+require_once __DIR__.'/../_private/config/config.php'; require_once ROOT_PATH.'/_private/lib/security.php';
+$u=require_auth();
+if($_SERVER['REQUEST_METHOD']==='GET'){ $s=$pdo->prepare('SELECT id,name,key_prefix,budget,spent,expires_at,last_used_at,is_active,created_at FROM api_keys WHERE user_id=? ORDER BY id DESC');$s->execute([$u['id']]);json_out(['keys'=>$s->fetchAll()]); }
+require_csrf(); if($_SERVER['REQUEST_METHOD']==='POST'){ $in=json_decode(file_get_contents('php://input'),true)?:$_POST;$name=trim((string)($in['name']??'My key'));if($name==='')$name='My key';$raw='sk-evruni-'.bin2hex(random_bytes(24));$hash=hash('sha256',$raw);$prefix=substr($raw,0,18);$budget=$in['budget']!==''&&isset($in['budget'])?(float)$in['budget']:null;$exp=!empty($in['expires_at'])?date('Y-m-d H:i:s',strtotime($in['expires_at'])):null;$pdo->prepare('INSERT INTO api_keys(user_id,name,key_prefix,key_hash,budget,expires_at) VALUES(?,?,?,?,?,?)')->execute([$u['id'],$name,$prefix,$hash,$budget,$exp]);audit('api_key_created',(int)$u['id'],['name'=>$name]);json_out(['ok'=>true,'key'=>$raw]);}
+if($_SERVER['REQUEST_METHOD']==='DELETE'){ $id=(int)($_GET['id']??0);$pdo->prepare('UPDATE api_keys SET is_active=0 WHERE id=? AND user_id=?')->execute([$id,$u['id']]);json_out(['ok'=>true]);}json_out(['error'=>'Method not allowed'],405);
