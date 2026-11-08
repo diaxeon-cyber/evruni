@@ -90,6 +90,26 @@ if(!$u){
 @media(max-width:760px){.public-nav{flex-wrap:wrap;gap:14px;padding:14px 0}.public-links{order:3;width:100%;justify-content:space-between;gap:10px;padding:8px 2px 2px}.public-links a{font-size:12px}.public-actions{margin-left:auto}.public-actions .ghost,.public-actions .primary{padding:9px 12px;font-size:12px}}
 @media(max-width:390px){.public-actions .primary{font-size:11px;padding:9px}.public-links a{font-size:11px}}
 
+
+/* Approved feature cards layout */
+.public-feature-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.public-feature-grid .public-card{grid-column:auto!important;min-height:150px;padding:24px 62px 22px 138px;border-radius:23px;background:linear-gradient(135deg,rgba(35,31,83,.94),rgba(12,14,35,.98));border:1px solid rgba(178,150,255,.52);box-shadow:inset 0 1px rgba(255,255,255,.08),0 14px 42px rgba(0,0,0,.22);backdrop-filter:blur(18px)}
+.public-feature-grid .public-card:before{content:"";position:absolute;left:25px;top:50%;width:78px;height:78px;transform:translateY(-50%);border-radius:22px;background:radial-gradient(circle,rgba(151,92,255,.42),rgba(75,91,255,.12) 70%);border:1px solid rgba(200,169,255,.38);box-shadow:0 0 25px var(--feature-glow,rgba(143,89,255,.4))}
+.public-feature-grid .public-card .icon{position:absolute;z-index:1;left:43px;top:50%;transform:translateY(-50%);width:42px;height:42px;margin:0;display:grid;place-items:center;background:none;border:0;border-radius:0;color:var(--feature-color,#d5b5ff);font-size:42px;font-weight:800;text-shadow:0 0 18px var(--feature-glow,rgba(143,89,255,.7))}
+.public-feature-grid .public-card h3{font-size:22px;margin:0 0 8px;color:#fff;letter-spacing:-.025em}
+.public-feature-grid .public-card p{font-size:14px;line-height:1.45;color:#d0cce4;margin:0;max-width:280px}
+.public-feature-grid .feature-tag{position:absolute;right:15px;top:12px;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(207,187,255,.18);font-size:10px;color:#eee4ff}
+.public-feature-grid .feature-arrow{position:absolute;right:15px;bottom:17px;width:38px;height:38px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(222,194,255,.38);background:rgba(146,73,255,.24);color:#fff;text-decoration:none;font-size:25px;transition:transform .2s ease,background .2s ease}
+.public-feature-grid .feature-arrow:hover{transform:translateX(3px);background:rgba(165,82,255,.55)}
+.public-feature-grid .feature-chat{--feature-color:#85caff;--feature-glow:rgba(60,174,255,.65);background:linear-gradient(120deg,rgba(27,66,112,.85),rgba(18,18,49,.98))}
+.public-feature-grid .feature-image{--feature-color:#e3a0ff;--feature-glow:rgba(214,75,255,.6);background:linear-gradient(120deg,rgba(89,29,115,.84),rgba(21,16,52,.98))}
+.public-feature-grid .feature-video{--feature-color:#ff9bbd;--feature-glow:rgba(255,102,163,.58);background:linear-gradient(120deg,rgba(104,45,79,.82),rgba(24,17,51,.98))}
+.public-feature-grid .feature-audio{--feature-color:#e58dff;--feature-glow:rgba(207,70,255,.65);background:linear-gradient(120deg,rgba(79,29,107,.85),rgba(22,15,53,.98))}
+.public-feature-grid .feature-docs{--feature-color:#8bcaff;--feature-glow:rgba(64,154,255,.65);background:linear-gradient(120deg,rgba(24,62,112,.86),rgba(17,20,54,.98))}
+.public-feature-grid .feature-research{--feature-color:#80f0c1;--feature-glow:rgba(47,232,168,.58);background:linear-gradient(120deg,rgba(24,90,79,.82),rgba(17,23,52,.98))}
+@media(max-width:980px){.public-feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.public-feature-grid{grid-template-columns:1fr;gap:12px}.public-feature-grid .public-card{min-height:132px;padding:20px 52px 18px 108px}.public-feature-grid .public-card:before{left:17px;width:68px;height:68px}.public-feature-grid .public-card .icon{left:34px;font-size:36px}.public-feature-grid .public-card h3{font-size:19px}.public-feature-grid .public-card p{font-size:13px}.public-feature-grid .feature-tag{right:10px;top:9px;font-size:9px}.public-feature-grid .feature-arrow{right:10px;bottom:12px;width:32px;height:32px}}
+
 </style>
 </head>
 <body class="public-page">
@@ -101,13 +121,13 @@ if(!$u){
 <section class="public-extra" id="capabilities" aria-label="Возможности Evruni">
 <h2 class="public-section-title">Всё главное — в одном месте.</h2>
 <p class="public-section-sub">Не просто чат с AI. Evruni объединяет инструменты для создания контента, работы, исследований, трендов и стриминга.</p>
-<div class="public-grid">
-<article class="public-card"><span class="icon">✦</span><h3>AI Chat</h3><p>Общение с AI для идей, задач, текстов, решений и повседневной работы.</p></article>
-<article class="public-card"><span class="icon">✧</span><h3>Image & Video</h3><p>Создавай визуальный контент и превращай идеи в готовые материалы.</p></article>
-<article class="public-card"><span class="icon">⌕</span><h3>Research</h3><p>Исследуй темы, собирай информацию и получай структурированные ответы.</p></article>
-<article class="public-card"><span class="icon">▤</span><h3>Documents</h3><p>Работай с документами, текстами и большими материалами без лишних сервисов.</p></article>
-<article class="public-card public-wide public-highlight"><span class="icon">↗</span><h3>Trend Lab</h3><p>Отслеживай направления, которые набирают внимание, находи интересные темы и превращай тренды в идеи для контента.</p><div class="public-pills"><span class="public-pill">Растущие темы</span><span class="public-pill">Идеи контента</span><span class="public-pill">Анализ тренда</span><span class="public-pill">Контент-поводы</span></div><a class="public-cta" href="/register.php">Открыть Trend Lab →</a></article>
-<article class="public-card public-wide"><span class="icon">🎥</span><h3>Creator Tools</h3><p>AI-инструменты для стримеров, которые работают поверх Twitch, YouTube и других платформ: чат, модерация, alerts, клипы, аналитика и управление стримом.</p><a class="public-cta" href="/register.php">Инструменты для стримера →</a></article>
+<div class="public-grid public-feature-grid">
+<article class="public-card feature-chat"><span class="icon">☏</span><span class="feature-tag">✦ Чат с ИИ</span><h3>AI Chat</h3><p>Общайся с ИИ, получай идеи, сценарии, тексты и советы.</p><a class="feature-arrow" href="/register.php" aria-label="Открыть AI Chat">→</a></article>
+<article class="public-card feature-image"><span class="icon">▧</span><span class="feature-tag">✦ Картинки</span><h3>Изображения</h3><p>Генерация уникальных картинок, обложек и артов.</p><a class="feature-arrow" href="/register.php" aria-label="Открыть изображения">→</a></article>
+<article class="public-card feature-video"><span class="icon">▶</span><span class="feature-tag">▣ Видео</span><h3>Видео с ИИ</h3><p>Создание и обработка видео, клипы, трейлеры и короткие ролики.</p><a class="feature-arrow" href="/register.php" aria-label="Открыть видео">→</a></article>
+<article class="public-card feature-audio"><span class="icon">♬</span><span class="feature-tag">〽 Аудио</span><h3>Голос / Аудио</h3><p>Озвучка текстов, работа с голосом, музыкой и звуковыми эффектами.</p><a class="feature-arrow" href="/register.php" aria-label="Открыть аудио">→</a></article>
+<article class="public-card feature-docs"><span class="icon">▤</span><span class="feature-tag">▱ Файлы</span><h3>Документы</h3><p>Анализ, пересказ, перевод и работа с файлами PDF, DOC и другими.</p><a class="feature-arrow" href="/register.php" aria-label="Открыть документы">→</a></article>
+<article class="public-card feature-research"><span class="icon">⌕</span><span class="feature-tag">⌘ Research</span><h3>Исследования</h3><p>Поиск информации, сбор данных, обзоры и аналитика с ИИ.</p><a class="feature-arrow" href="/register.php" aria-label="Открыть исследования">→</a></article>
 </div>
 
 <h2 class="public-section-title" style="margin-top:64px">От идеи до результата — без лишних переключений.</h2>
