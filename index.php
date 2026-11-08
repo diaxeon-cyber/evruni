@@ -57,6 +57,17 @@ if(!$u){
 .public-trends{box-shadow:inset 0 1px rgba(255,255,255,.04),0 22px 70px rgba(0,0,0,.18)}
 @media(max-width:700px){.public-nav{width:calc(100% - 28px);padding:16px 0}.public-main{padding-top:12px}.public-hero{width:calc(100% - 28px);min-height:420px;margin-bottom:54px;padding:28px 22px;border-radius:26px}.public-hero h1{font-size:clamp(39px,11vw,58px)}.public-extra{width:calc(100% - 28px)}.public-section-title{font-size:29px}}
 
+
+.public-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:30px 0 72px}
+.public-step{padding:23px;border-radius:22px;border:1px solid rgba(150,160,210,.14);background:rgba(15,20,39,.72)}
+.public-step b{display:block;color:#c7b8ff;font-size:12px;letter-spacing:.12em;margin-bottom:14px}
+.public-step h3{margin:0 0 8px;color:#f5f7ff;font-size:18px}
+.public-step p{margin:0;color:#929db5;font-size:14px;line-height:1.6}
+.public-bottom-cta{margin:68px 0 20px;padding:clamp(26px,5vw,48px);text-align:center;border:1px solid rgba(150,130,255,.2);border-radius:28px;background:radial-gradient(ellipse at 50% 0,rgba(123,85,255,.2),transparent 65%),rgba(15,18,38,.78)}
+.public-bottom-cta h2{font-size:clamp(27px,4vw,40px);letter-spacing:-.04em;color:#f5f7ff;margin:0 0 10px}
+.public-bottom-cta p{color:#929db5;line-height:1.6;margin:0 auto 20px;max-width:620px}
+@media(max-width:700px){.public-steps{grid-template-columns:1fr;margin-bottom:52px}.public-step{padding:20px}.public-bottom-cta{margin-top:50px}}
+
 </style>
 </head>
 <body class="public-page">
@@ -77,6 +88,10 @@ if(!$u){
 <article class="public-card public-wide"><span class="icon">🎥</span><h3>Creator Tools</h3><p>AI-инструменты для стримеров, которые работают поверх Twitch, YouTube и других платформ: чат, модерация, alerts, клипы, аналитика и управление стримом.</p><a class="public-cta" href="/register.php">Инструменты для стримера →</a></article>
 </div>
 
+<h2 class="public-section-title" style="margin-top:64px">От идеи до результата — без лишних переключений.</h2>
+<p class="public-section-sub">Простой рабочий процесс: выбери инструмент, опиши задачу и продолжай работу в одном пространстве.</p>
+<div class="public-steps"><article class="public-step"><b>01 / ВЫБЕРИ</b><h3>Подходящий инструмент</h3><p>Начни с чата, визуального контента, исследования или другого раздела Evruni.</p></article><article class="public-step"><b>02 / СОЗДАЙ</b><h3>Сформулируй задачу</h3><p>Опиши результат, который хочешь получить, и используй доступные настройки инструмента.</p></article><article class="public-step"><b>03 / ПРОДОЛЖАЙ</b><h3>Собери свою работу</h3><p>Возвращайся к проектам и используй другие инструменты по мере необходимости.</p></article></div>
+
 <h2 class="public-section-title" style="margin-top:70px">Для тех, кто выходит в эфир.</h2>
 <p class="public-section-sub">Evruni не заменяет Twitch или YouTube — он становится умным слоем между стримером и его аудиторией.</p>
 <div class="public-stream">
@@ -87,6 +102,7 @@ if(!$u){
 </div>
 
 <div class="public-trends"><div><div class="eyebrow"><span class="pulse-dot"></span> EVRUNI TREND LAB</div><h2 class="public-section-title" style="margin-top:12px">Тренд → идея → контент.</h2><p class="public-section-sub" style="margin-bottom:0">Находи темы, которые сейчас растут, разбирай их с AI и сразу превращай в сценарии, посты, видео или идеи для стрима.</p></div><div class="public-card" style="min-height:0"><span class="icon">⚡</span><h3>Что можно сделать</h3><p>Выбрать тренд → понять, почему он растёт → получить несколько углов подачи → создать контент в Evruni.</p><a class="public-cta" href="/register.php">Попробовать →</a></div></div>
+<div class="public-bottom-cta"><h2>Попробуй Evruni в деле</h2><p>Создай аккаунт и познакомься с рабочим пространством. Доступность отдельных AI-инструментов зависит от подключённых моделей и настроек.</p><a class="public-cta" href="/register.php">Создать аккаунт →</a></div>
 </section>
 </main>
 </body></html>
