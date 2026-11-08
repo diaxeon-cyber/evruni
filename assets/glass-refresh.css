@@ -1,0 +1,91 @@
+/* Evruni Glass Refresh — additive visual layer; preserves existing app behavior */
+:root{
+  --bg:#070711;--panel:rgba(17,15,34,.78);--panel2:rgba(23,19,43,.88);
+  --line:rgba(177,155,255,.16);--text:#f7f5ff;--muted:#a29bb9;
+  --accent:#9b7cff;--accent2:#c2aaff;--shadow:0 24px 70px rgba(0,0,0,.38);
+}
+html{color-scheme:dark}
+body{
+ background:
+  radial-gradient(ellipse at 12% 0%,rgba(122,76,255,.20),transparent 34%),
+  radial-gradient(ellipse at 90% 18%,rgba(64,119,255,.11),transparent 30%),
+  linear-gradient(145deg,#070711 0%,#0b0a18 52%,#080914 100%);
+}
+.sidebar,.admin-wrap,.auth-card{
+ background:rgba(10,9,22,.82);
+ border-color:var(--line);
+ backdrop-filter:blur(22px);
+}
+.sidebar{box-shadow:12px 0 50px rgba(0,0,0,.18)}
+.view-card,.public-card,.admin-panel,.chart-panel,.userbox,.profile-trigger,.profile-dropdown,
+.auth-card,.public-trends,.admin-stat{
+ border-color:var(--line)!important;
+ background:linear-gradient(145deg,rgba(27,22,49,.84),rgba(12,12,27,.90))!important;
+ box-shadow:var(--shadow);
+ backdrop-filter:blur(18px);
+}
+.nav,.side-bottom a{border-radius:13px;transition:background .2s,border-color .2s,transform .2s,color .2s}
+.nav.active{background:linear-gradient(105deg,rgba(142,105,255,.24),rgba(99,79,170,.08));border-color:rgba(177,155,255,.27)}
+.primary,.public-cta{
+ background:linear-gradient(125deg,#a88bff,#7954ed 58%,#5c48c9);
+ border:1px solid rgba(219,205,255,.24);
+ box-shadow:0 10px 30px rgba(111,76,224,.28);
+}
+.primary:hover,.public-cta:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.ghost,.danger,.toolbar input,.toolbar select,.auth-card input,.big-input,
+.model-filters input,.model-filters select,.admin-tools input,.admin-tools select{
+ border-color:var(--line);
+}
+input,textarea,select{accent-color:#9b7cff}
+input:focus,textarea:focus,select:focus{
+ border-color:rgba(177,155,255,.65)!important;
+ box-shadow:0 0 0 3px rgba(143,108,255,.13)!important;
+}
+.public-nav{
+ background:rgba(8,8,19,.70);
+ border-bottom:1px solid var(--line);
+ backdrop-filter:blur(18px);
+}
+.public-hero{position:relative}
+.public-hero:after{
+ content:"";position:absolute;right:5%;top:5%;width:min(38vw,440px);aspect-ratio:1;
+ border-radius:50%;pointer-events:none;z-index:-1;
+ background:radial-gradient(circle,rgba(132,91,255,.20),rgba(76,119,255,.07) 42%,transparent 70%);
+ filter:blur(12px);
+}
+.logo-mark{box-shadow:0 0 24px rgba(139,104,255,.38),inset 0 1px 1px rgba(255,255,255,.3)}
+.admin-nav{border-color:var(--line);background:rgba(15,12,30,.78)}
+.admin-nav-toggle,.admin-nav-sub{border-color:var(--line);background:rgba(18,15,34,.96)}
+@media(max-width:900px){
+ .main{padding:22px 22px 44px}
+ .sidebar{width:230px;flex-basis:230px}
+}
+@media(max-width:650px){
+ .app{display:block}
+ .sidebar{
+  position:sticky;top:0;width:100%;height:auto;min-height:0;flex:none;
+  padding:8px 10px;border-right:0;border-bottom:1px solid var(--line);
+  z-index:30;
+ }
+ .sidebar .logo{margin:0 4px 6px;padding:5px 8px;font-size:20px}
+ .sidebar nav{
+  display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;
+  padding:2px 1px 6px;scrollbar-width:thin;
+ }
+ .sidebar nav .nav{flex:0 0 auto;width:auto;padding:9px 11px;white-space:nowrap}
+ .sidebar .side-bottom{display:flex;gap:6px;margin:0;padding:6px 0 0;border-top:1px solid var(--line)}
+ .sidebar .side-bottom .nav{width:auto;flex:1}
+ .sidebar-collapse-toggle{position:absolute;right:12px;top:12px;width:auto!important;margin:0!important}
+ .sidebar.sidebar-collapsed{width:100%;height:auto;padding:8px 10px}
+ .sidebar.sidebar-collapsed .logo-copy{display:flex}
+ .sidebar.sidebar-collapsed .nav>span:not(:first-child){display:inline}
+ .main{width:100%;padding:18px 14px 36px}
+ header{align-items:flex-start;flex-wrap:wrap}
+ .main h1{font-size:clamp(25px,7vw,34px)}
+ .public-nav{padding:12px 14px}
+ .public-extra{width:calc(100% - 24px)}
+ .admin-wrap{padding:18px 12px 34px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
