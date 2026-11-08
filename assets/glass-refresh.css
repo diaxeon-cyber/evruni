@@ -89,3 +89,59 @@ input:focus,textarea:focus,select:focus{
 @media(prefers-reduced-motion:reduce){
  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+/* Authenticated workspace: navigation, command header and content surfaces */
+.dashboard-page .sidebar{
+  background:linear-gradient(180deg,rgba(13,10,29,.96),rgba(8,9,20,.94));
+  border-right:1px solid rgba(177,155,255,.18);
+  box-shadow:18px 0 60px rgba(0,0,0,.24);
+}
+.dashboard-page .sidebar nav{gap:7px}
+.dashboard-page .sidebar .nav{
+  min-height:43px;padding:10px 13px;border:1px solid transparent;
+  color:#aaa3c2;background:rgba(255,255,255,.018);
+}
+.dashboard-page .sidebar .nav:hover{
+  color:#fff;background:rgba(151,119,255,.10);
+  border-color:rgba(177,155,255,.15);transform:translateX(2px);
+}
+.dashboard-page .sidebar .nav.active{
+  color:#fff;border-color:rgba(184,157,255,.28);
+  background:linear-gradient(105deg,rgba(139,101,255,.27),rgba(93,72,165,.10));
+  box-shadow:inset 3px 0 0 #a98aff,0 8px 24px rgba(88,61,165,.12);
+}
+.dashboard-page .main>header{
+  position:relative;margin:-4px 0 26px;padding:17px 20px;
+  border:1px solid rgba(177,155,255,.14);border-radius:22px;
+  background:linear-gradient(115deg,rgba(24,19,43,.82),rgba(12,14,30,.78));
+  box-shadow:0 18px 46px rgba(0,0,0,.18);backdrop-filter:blur(20px);
+}
+.dashboard-page .header-tools{gap:12px}
+.dashboard-page .global-search-input{
+  min-height:42px;border:1px solid rgba(177,155,255,.18);
+  border-radius:13px;background:rgba(5,6,17,.48);color:#f7f5ff;
+}
+.dashboard-page .profile-trigger{
+  border:1px solid rgba(177,155,255,.18);
+  border-radius:15px;padding:7px 11px;
+}
+.dashboard-page #view{min-width:0}
+.dashboard-page #view .view-card,
+.dashboard-page #view .panel,
+.dashboard-page #view .tool-card{
+  border:1px solid rgba(177,155,255,.15);
+  border-radius:20px;background:linear-gradient(145deg,rgba(25,20,45,.82),rgba(11,12,27,.91));
+  box-shadow:0 18px 52px rgba(0,0,0,.20);
+}
+.dashboard-page #view button{transition:transform .18s ease,border-color .18s ease,filter .18s ease}
+.dashboard-page #view button:hover{filter:brightness(1.08)}
+.dashboard-page #view button.primary:hover{transform:translateY(-1px)}
+@media(max-width:650px){
+  .dashboard-page .main>header{margin:0 0 18px;padding:14px;border-radius:17px}
+  .dashboard-page .header-tools{width:100%;display:flex;flex-wrap:wrap}
+  .dashboard-page .global-search-wrap{flex:1 1 100%;min-width:0}
+  .dashboard-page .global-search-input{width:100%}
+  .dashboard-page .profile-trigger{max-width:100%}
+  .dashboard-page .sidebar nav .nav{border:1px solid rgba(177,155,255,.12)}
+  .dashboard-page .sidebar nav .nav.active{border-color:rgba(184,157,255,.32)}
+}
