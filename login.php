@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
   $error='Неверный email или пароль';
   }
 }
-?><!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Вход — Evruni</title><link rel="stylesheet" href="/assets/app.css?v=282"><?php if(captcha_enabled() && (string)envv('TURNSTILE_SITE_KEY','')!==''): ?>
+?><!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Вход — Evruni</title><link rel="stylesheet" href="/assets/app.css?v=282"><link rel="stylesheet" href="/assets/glass-refresh.css?v=1"><?php if(captcha_enabled() && (string)envv('TURNSTILE_SITE_KEY','')!==''): ?>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <?php endif; ?></head>
 <body class="auth"><form class="auth-card" method="post"><div class="logo">◈ Evruni</div><h1>С возвращением</h1><?php if(!empty($error)):?><div class="error"><?=e($error)?></div><?php endif;?><input name="email" type="email" placeholder="Email" required><input name="password" type="password" placeholder="Пароль" required><?php if(captcha_enabled() && (string)envv('TURNSTILE_SITE_KEY','')!==''): ?>
