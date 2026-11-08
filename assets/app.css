@@ -3666,3 +3666,54 @@ transform:rotate(-12deg);filter:blur(.5px);animation:heroCoreOrbits 18s linear i
   .dashboard-page .sidebar nav .nav{min-height:29px;padding-block:3px;font-size:11px}
   .dashboard-page .sidebar nav .nav > span:first-child{font-size:13px}
 }
+
+/* Evruni responsive workspace: fluid sizing across the whole interface */
+:root{
+  --ui-gutter:clamp(12px,2.4vw,40px);
+  --ui-radius:clamp(14px,1.5vw,24px);
+}
+html{font-size:clamp(14px,calc(13px + .22vw),16px);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{min-width:320px;overflow-x:hidden}
+img,video,canvas,svg{max-width:100%}
+.app,.main,.admin-wrap,.public-main{min-width:0;max-width:100%}
+.main{padding:clamp(16px,2.2vw,32px) var(--ui-gutter) clamp(28px,4vw,60px)}
+.view-card,.admin-panel,.public-card,.profile-dropdown,.trend-modal-panel{min-width:0;max-width:100%}
+.view-card{border-radius:var(--ui-radius)}
+.toolbar,.header-tools,.trend-v2-toolbar,.trend-pagination{min-width:0;flex-wrap:wrap}
+.toolbar>*{max-width:100%;min-width:0}
+input,select,textarea,button{max-width:100%}
+textarea{resize:vertical}
+table{max-width:100%}
+.table-wrap,.table-responsive,.admin-table-wrap{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain}
+@media(min-width:1500px){
+  .app{max-width:1920px;margin-inline:auto}
+  .sidebar{width:clamp(268px,18vw,320px);flex-basis:clamp(268px,18vw,320px)}
+}
+@media(max-width:1100px){
+  .main{padding-inline:clamp(16px,2vw,24px)}
+  .main h1{font-size:clamp(25px,3vw,34px)}
+  .view-top{gap:14px;flex-wrap:wrap}
+}
+@media(max-width:850px){
+  .app{min-height:100dvh}
+  .main{width:100%;padding:18px 16px 36px}
+  .main h1{font-size:clamp(23px,4vw,30px)}
+  .header-tools{width:100%;justify-content:flex-start}
+  .chat-layout,.studio-grid,.two-col{min-width:0}
+}
+@media(max-width:650px){
+  .sidebar{max-height:none}
+  .main{padding:14px 12px 30px}
+  .main>header{gap:12px}
+  .main h1{font-size:clamp(22px,6vw,28px)}
+  .view-top{padding:18px 14px 10px}
+  .view-top h2{font-size:clamp(21px,5vw,26px)}
+  .toolbar{align-items:stretch}
+  .toolbar>*{flex:1 1 140px}
+  .trend-upload-grid,.model-grid,.pricing-grid,.stats{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:380px){
+  .main{padding-inline:9px}
+  .view-top{padding-inline:12px}
+  .primary,.ghost,.danger{padding:9px 11px}
+}
