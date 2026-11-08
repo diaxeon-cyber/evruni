@@ -74,6 +74,7 @@ $u=require_admin();
 .admin-nav-sub{pointer-events:auto}
 @media(max-width:650px){.admin-nav{overflow-x:auto}.admin-nav-sub{position:fixed;left:auto;min-width:190px}.admin-nav-toggle{padding:9px 11px;font-size:11px}}
 </style>
+<link rel="stylesheet" href="/assets/glass-refresh.css?v=1">
 </head>
 <body>
 <div class="dashboard-ambient ambient-a"></div><div class="dashboard-ambient ambient-b"></div>
