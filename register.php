@@ -16,10 +16,10 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
   } catch(Throwable $e){$error='Не удалось создать аккаунт';}
   }
 }
-?><!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Регистрация — Evruni</title><link rel="stylesheet" href="/assets/app.css?v=303"><link rel="stylesheet" href="/assets/glass-refresh.css?v=2"><?php if(captcha_enabled() && (string)envv('TURNSTILE_SITE_KEY','')!==''): ?>
+?><!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Регистрация — Evruni</title><link rel="stylesheet" href="/assets/app.css?v=303"><link rel="stylesheet" href="/assets/glass-refresh.css?v=2"><link rel="stylesheet" href="/assets/auth-preview.css?v=1"><?php if(captcha_enabled() && (string)envv('TURNSTILE_SITE_KEY','')!==''): ?>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <?php endif; ?></head>
-<body class="auth"><form class="auth-card" method="post"><div class="logo">◈ Evruni</div><h1>Создать аккаунт</h1><?php if(!empty($error)):?><div class="error"><?=e($error)?></div><?php endif;?><input name="name" placeholder="Имя" required><input name="email" type="email" placeholder="Email" required><input name="password" type="password" placeholder="Пароль (10+ символов)" required><?php if(captcha_enabled() && (string)envv('TURNSTILE_SITE_KEY','')!==''): ?>
+<body class="auth"><form class="auth-card" method="post"><div class="logo"><span class="logo-mark"><i></i><span class="logo-orbit"></span><span class="logo-star"></span></span><span class="logo-word">Evruni</span></div><h1>Создать аккаунт</h1><p class="auth-subtitle">Начните создавать с помощью искусственного интеллекта</p><?php if(!empty($error)):?><div class="error"><?=e($error)?></div><?php endif;?><input name="name" placeholder="Имя" required><input name="email" type="email" placeholder="Email" required><input name="password" type="password" placeholder="Пароль (10+ символов)" required><?php if(captcha_enabled() && (string)envv('TURNSTILE_SITE_KEY','')!==''): ?>
 <div class="evruni-turnstile"><div class="cf-turnstile" data-sitekey="<?=e((string)envv('TURNSTILE_SITE_KEY',''))?>" data-theme="dark" data-size="flexible"></div></div>
 <?php endif; ?><?php $googleOAuth=oauth_provider_config('google'); $githubOAuth=oauth_provider_config('github'); ?>
 <?php if($googleOAuth || $githubOAuth): ?>
