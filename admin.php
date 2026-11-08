@@ -13,7 +13,7 @@ $u=require_admin();
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#070a12">
 <title>Evruni — Admin</title>
-<link rel="stylesheet" href="/assets/app.css?v=282">
+<link rel="stylesheet" href="/assets/app.css?v=305">
 <style>
 .admin-wrap{min-height:100vh;padding:28px 34px 55px;max-width:1500px;margin:auto}
 .admin-head{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:25px}
