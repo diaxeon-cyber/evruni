@@ -75,6 +75,46 @@ $u=require_admin();
 @media(max-width:650px){.admin-nav{overflow-x:auto}.admin-nav-sub{position:fixed;left:auto;min-width:190px}.admin-nav-toggle{padding:9px 11px;font-size:11px}}
 </style>
 <link rel="stylesheet" href="/assets/glass-refresh.css?v=1">
+<style id="evruni-admin-fluid-layout">
+.admin-wrap{width:min(100%,1500px);box-sizing:border-box;padding:clamp(12px,2.2vw,34px)}
+.admin-head{flex-wrap:wrap;min-width:0}
+.admin-brand{min-width:0}
+.admin-nav{max-width:100%;flex-wrap:wrap;align-items:flex-start}
+.admin-content,.admin-grid,.admin-panel,.chart-panel{min-width:0;max-width:100%}
+.admin-stats{grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr))}
+.admin-grid{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)}
+.admin-table{min-width:620px}
+.admin-panel .body{max-width:100%;overflow-x:auto}
+.admin-tools>*{min-width:0;max-width:100%}
+@media(max-width:900px){
+ .admin-wrap{padding:16px}
+ .admin-grid{grid-template-columns:minmax(0,1fr)}
+ .admin-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .admin-nav{gap:6px}
+ .admin-nav-group{max-width:100%}
+}
+@media(max-width:650px){
+ .admin-wrap{padding:12px 10px 30px}
+ .admin-head{gap:12px}
+ .admin-brand h1{font-size:clamp(19px,5vw,24px)}
+ .admin-nav{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:visible;scrollbar-width:thin;padding:6px}
+ .admin-nav-group{flex:0 0 auto}
+ .admin-nav-toggle{font-size:11px;padding:9px 10px}
+ .admin-nav-sub{position:fixed;left:10px;right:10px;top:auto;min-width:0;max-width:calc(100vw - 20px)}
+ .admin-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .admin-stat{padding:12px}
+ .admin-stat b{font-size:clamp(18px,5vw,23px)}
+ .analytics-grid,.system-grid,.notice-editor,.payment-settings-grid{grid-template-columns:minmax(0,1fr)}
+ .admin-tools{align-items:stretch}
+ .admin-tools input,.admin-tools select{width:100%;min-width:0;box-sizing:border-box}
+ .notice-actions{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:380px){
+ .admin-stats{grid-template-columns:minmax(0,1fr)}
+ .admin-brand .orb{width:34px;height:34px;flex:0 0 34px}
+}
+</style>
+
 </head>
 <body>
 <div class="dashboard-ambient ambient-a"></div><div class="dashboard-ambient ambient-b"></div>
