@@ -27,4 +27,4 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
   <?php if($googleOAuth): ?><a class="evruni-social evruni-google" href="/api/auth.php?action=oauth_start&provider=google"><span>G</span><span>Google</span></a><?php endif; ?>
   <?php if($githubOAuth): ?><a class="evruni-social evruni-github" href="/api/auth.php?action=oauth_start&provider=github"><span>⌘</span><span>GitHub</span></a><?php endif; ?>
 </div>
-<?php endif; ?><button class="primary">Войти</button><div class="auth-links"><a href="/forgot-password.php">Забыли пароль?</a><a href="/register.php">Создать аккаунт</a></div></form></body></html>
+<?php endif; ?><button class="primary">Войти</button><a href="/register.php">Создать аккаунт</a></form></body></html>
