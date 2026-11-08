@@ -17,7 +17,7 @@ if(!$u){
 <meta name="theme-color" content="#070a12">
 <meta name="description" id="publicDescription" content="Evruni — современное AI-пространство для текста, изображений, исследований, трендов и стримеров.">
 <title>Evruni — AI Workspace</title>
-<link rel="stylesheet" href="/assets/app.css?v=302">
+<link rel="stylesheet" href="/assets/app.css?v=302"><link rel="stylesheet" href="/assets/glass-refresh.css?v=1">
 <style>
 .public-extra{width:min(1180px,calc(100% - 40px));margin:0 auto 90px;position:relative;z-index:2}
 .public-section-title{font-size:clamp(28px,5vw,48px);line-height:1.05;margin:0 0 12px;color:#f5f7ff;letter-spacing:-.03em}
