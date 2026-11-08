@@ -115,7 +115,7 @@ $u=require_admin();
 }
 </style>
 
-</head>
+<link rel="stylesheet" href="/assets/evruni-design-system.css?v=1"></head>
 <body>
 <div class="dashboard-ambient ambient-a"></div><div class="dashboard-ambient ambient-b"></div>
 <main class="admin-wrap">
