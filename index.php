@@ -22,7 +22,7 @@ if(!$u){
 .public-extra{width:min(1180px,calc(100% - 40px));margin:0 auto 90px;position:relative;z-index:2}
 .public-section-title{font-size:clamp(28px,5vw,48px);line-height:1.05;margin:0 0 12px;color:#f5f7ff;letter-spacing:-.03em}
 .public-section-sub{margin:0 0 28px;color:#8792aa;font-size:16px;line-height:1.65;max-width:720px}
-.public-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.public-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
 .public-card{position:relative;overflow:hidden;min-height:180px;padding:24px;border:1px solid rgba(150,160,210,.14);border-radius:24px;background:linear-gradient(145deg,rgba(22,27,50,.86),rgba(8,12,24,.94));box-shadow:0 18px 60px rgba(0,0,0,.2)}
 .public-card:after{content:"";position:absolute;width:120px;height:120px;right:-50px;top:-50px;border-radius:50%;background:radial-gradient(circle,rgba(120,90,255,.25),transparent 70%);pointer-events:none}
 .public-card .icon{font-size:28px;display:block;margin-bottom:18px}.public-card h3{margin:0 0 8px;color:#f5f7ff;font-size:19px}.public-card p{margin:0;color:#8d98af;line-height:1.55;font-size:14px}
@@ -68,6 +68,23 @@ if(!$u){
 .public-bottom-cta p{color:#929db5;line-height:1.6;margin:0 auto 20px;max-width:620px}
 @media(max-width:700px){.public-steps{grid-template-columns:1fr;margin-bottom:52px}.public-step{padding:20px}.public-bottom-cta{margin-top:50px}}
 
+
+.public-grid .public-card{grid-column:span 2;min-height:155px;padding:21px;border-radius:22px}
+.public-grid .public-card:nth-child(5),.public-grid .public-card:nth-child(6){grid-column:span 3}
+.public-grid .public-card .icon{width:48px;height:48px;display:grid;place-items:center;margin:0 0 14px;border-radius:15px;background:linear-gradient(145deg,rgba(169,94,255,.25),rgba(75,118,255,.13));border:1px solid rgba(187,151,255,.24);color:#d9b9ff}
+.public-creator-panel{position:relative;display:grid;grid-template-columns:.95fr 1.05fr;gap:clamp(22px,4vw,52px);align-items:center;overflow:hidden;margin-top:72px;padding:clamp(22px,4vw,42px);border:1px solid rgba(193,112,255,.55);border-radius:30px;background:radial-gradient(ellipse at 15% 45%,rgba(130,46,255,.35),transparent 52%),linear-gradient(115deg,rgba(34,16,76,.96),rgba(12,13,36,.98));box-shadow:0 0 42px rgba(144,66,255,.18),inset 0 1px rgba(255,255,255,.09)}
+.creator-art{min-height:280px;position:relative;display:flex;align-items:center;justify-content:center;isolation:isolate}
+.creator-screen{width:76%;height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border:1px solid rgba(210,174,255,.65);border-radius:22px;background:linear-gradient(145deg,rgba(117,54,205,.7),rgba(15,21,55,.96));box-shadow:0 0 38px rgba(161,76,255,.42);transform:rotate(-5deg);color:#fff}
+.creator-screen span{font-size:20px;font-weight:900;letter-spacing:.14em}.creator-screen b{font-size:48px;text-shadow:0 0 22px #d86bff}.creator-screen i,.creator-phone i{font-size:10px;letter-spacing:.18em;color:#d8c5ff;font-style:normal}
+.creator-phone{position:absolute;right:2%;bottom:0;width:104px;height:190px;border:2px solid #d6b5ff;border-radius:22px;background:linear-gradient(160deg,#4a1c87,#10162e);box-shadow:0 0 30px rgba(200,80,255,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transform:rotate(8deg);color:white}
+.creator-phone span{font-size:35px}.creator-phone b{font-size:30px}.creator-orbit{position:absolute;z-index:-1;width:310px;height:90px;border:2px solid rgba(187,93,255,.5);border-radius:50%;transform:rotate(-18deg);box-shadow:0 0 25px rgba(169,65,255,.4)}
+.creator-copy h2{font-size:clamp(26px,3vw,40px);line-height:1.08;letter-spacing:-.04em;color:#fff;margin:14px 0}
+.creator-copy p{font-size:15px;line-height:1.65;color:#c0bdd7;max-width:570px}
+.creator-copy ul{list-style:none;padding:0;margin:20px 0;display:grid;gap:11px;color:#e7e0ff}
+.creator-copy li{display:flex;gap:10px;align-items:center}.creator-copy li span{display:grid;place-items:center;width:22px;height:22px;flex:0 0 22px;border-radius:7px;background:linear-gradient(135deg,#a94dff,#633bda);color:white;font-weight:900}
+@media(max-width:900px){.public-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.public-grid .public-card,.public-grid .public-card:nth-child(5),.public-grid .public-card:nth-child(6){grid-column:span 1}.public-creator-panel{grid-template-columns:1fr}.creator-art{min-height:230px;order:0}.creator-copy{order:1}}
+@media(max-width:560px){.public-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.public-grid .public-card,.public-grid .public-card:nth-child(5),.public-grid .public-card:nth-child(6){min-height:142px;padding:15px}.public-grid .public-card h3{font-size:15px}.public-grid .public-card p{font-size:12px}.public-grid .public-card .icon{width:40px;height:40px;font-size:22px;margin-bottom:10px}.public-creator-panel{margin-top:54px;padding:20px;border-radius:24px;gap:12px}.creator-art{min-height:190px}.creator-screen{height:160px}.creator-phone{height:150px;width:82px}.creator-copy h2{font-size:28px}.creator-copy li{font-size:13px}}
+
 </style>
 </head>
 <body class="public-page">
@@ -92,14 +109,10 @@ if(!$u){
 <p class="public-section-sub">Простой рабочий процесс: выбери инструмент, опиши задачу и продолжай работу в одном пространстве.</p>
 <div class="public-steps"><article class="public-step"><b>01 / ВЫБЕРИ</b><h3>Подходящий инструмент</h3><p>Начни с чата, визуального контента, исследования или другого раздела Evruni.</p></article><article class="public-step"><b>02 / СОЗДАЙ</b><h3>Сформулируй задачу</h3><p>Опиши результат, который хочешь получить, и используй доступные настройки инструмента.</p></article><article class="public-step"><b>03 / ПРОДОЛЖАЙ</b><h3>Собери свою работу</h3><p>Возвращайся к проектам и используй другие инструменты по мере необходимости.</p></article></div>
 
-<h2 class="public-section-title" style="margin-top:70px">Для тех, кто выходит в эфир.</h2>
-<p class="public-section-sub">Evruni не заменяет Twitch или YouTube — он становится умным слоем между стримером и его аудиторией.</p>
-<div class="public-stream">
-<article class="public-card"><span class="icon">💬</span><h3>AI Chat Bot</h3><p>Отвечает зрителям и помогает поддерживать интерактив.</p></article>
-<article class="public-card"><span class="icon">🛡️</span><h3>AI Moderator</h3><p>Фильтрует спам и проблемные сообщения по событиям.</p></article>
-<article class="public-card"><span class="icon">✂️</span><h3>Auto Clips</h3><p>Отмечай яркие моменты и готовь их к дальнейшей обработке.</p></article>
-<article class="public-card"><span class="icon">⚙</span><h3>Управление эфиром</h3><p>Собирай инструменты стримера и основные действия в одном удобном рабочем процессе.</p></article>
-</div>
+<section class="public-creator-panel" aria-label="Инструменты для стримеров и TikTok-креаторов">
+<div class="creator-art" aria-hidden="true"><div class="creator-screen"><span>EVRUNI</span><b>▶</b><i>LIVE WORKSPACE</i></div><div class="creator-phone"><span>♪</span><b>▶</b><i>12.4K</i></div><div class="creator-orbit"></div></div>
+<div class="creator-copy"><div class="eyebrow"><span class="pulse-dot"></span> CREATOR WORKSPACE</div><h2>Стримерам и TikTok-креаторам</h2><p>Evruni помогает готовить контент, находить идеи и работать с инструментами для эфира в одном пространстве.</p><ul><li><span>✓</span> Идеи и сценарии для роликов</li><li><span>✓</span> Тренды TikTok и примеры</li><li><span>✓</span> AI-инструменты для контента</li><li><span>✓</span> Инструменты для работы со стримом</li></ul><a class="public-cta" href="/register.php">Открыть инструменты →</a></div>
+</section>
 
 <div class="public-trends"><div><div class="eyebrow"><span class="pulse-dot"></span> EVRUNI TREND LAB</div><h2 class="public-section-title" style="margin-top:12px">Тренд → идея → контент.</h2><p class="public-section-sub" style="margin-bottom:0">Находи темы, которые сейчас растут, разбирай их с AI и сразу превращай в сценарии, посты, видео или идеи для стрима.</p></div><div class="public-card" style="min-height:0"><span class="icon">⚡</span><h3>Что можно сделать</h3><p>Выбрать тренд → понять, почему он растёт → получить несколько углов подачи → создать контент в Evruni.</p><a class="public-cta" href="/register.php">Попробовать →</a></div></div>
 <div class="public-bottom-cta"><h2>Попробуй Evruni в деле</h2><p>Создай аккаунт и познакомься с рабочим пространством. Доступность отдельных AI-инструментов зависит от подключённых моделей и настроек.</p><a class="public-cta" href="/register.php">Создать аккаунт →</a></div>
