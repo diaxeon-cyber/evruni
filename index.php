@@ -33,15 +33,39 @@ if(!$u){
 .public-stream{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.public-stream .public-card{min-height:155px}
 @media(max-width:900px){.public-grid,.public-stream{grid-template-columns:repeat(2,minmax(0,1fr))}.public-wide{grid-column:span 2}.public-trends{grid-template-columns:1fr}}
 @media(max-width:560px){.public-extra{width:min(100% - 24px,1180px);margin-bottom:55px}.public-grid,.public-stream{grid-template-columns:1fr}.public-wide{grid-column:span 1}.public-card{min-height:150px;padding:20px}.public-trends{padding:22px}.public-section-title{font-size:30px}}
+
+/* Public landing refresh */
+.public-page{overflow-x:hidden;background:#070914}
+.public-nav{width:min(1240px,calc(100% - 48px));margin:0 auto;padding:22px 0;position:relative;z-index:5}
+.public-main{padding-top:30px}
+.public-hero{width:min(1240px,calc(100% - 48px));min-height:470px;margin:0 auto 76px;padding:clamp(34px,7vw,82px);display:flex;align-items:center;position:relative;overflow:hidden;border:1px solid rgba(157,139,255,.22);border-radius:36px;background:radial-gradient(ellipse at 82% 20%,rgba(107,76,255,.30),transparent 36%),radial-gradient(ellipse at 12% 100%,rgba(40,128,255,.16),transparent 42%),linear-gradient(135deg,rgba(23,23,53,.96),rgba(8,12,27,.98));box-shadow:0 30px 100px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.06)}
+.public-hero:after{content:"";position:absolute;width:430px;height:430px;right:-100px;bottom:-220px;border:1px solid rgba(163,145,255,.18);border-radius:50%;box-shadow:0 0 0 34px rgba(145,120,255,.035),0 0 0 72px rgba(145,120,255,.025),0 0 100px rgba(122,88,255,.2);pointer-events:none}
+.hero-copy{max-width:760px;position:relative;z-index:1}
+.public-hero h1{font-size:clamp(42px,7vw,76px);line-height:.99;letter-spacing:-.055em;margin:22px 0;color:#f8f8ff}
+.public-hero h1 span{background:linear-gradient(95deg,#c6a7ff 5%,#8b9cff 55%,#7de0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.public-hero p{max-width:650px;font-size:clamp(16px,2vw,19px);line-height:1.7;color:#aab3ca}
+.public-hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.public-hero-actions a{display:inline-flex;align-items:center;justify-content:center;padding:14px 20px;border-radius:15px;text-decoration:none;font-weight:750}
+.public-hero-actions .primary{background:linear-gradient(120deg,#9064ff,#547fff);color:#fff;box-shadow:0 12px 34px rgba(108,88,255,.28)}
+.public-hero-actions .secondary{color:#e4e7ff;border:1px solid rgba(190,190,255,.2);background:rgba(255,255,255,.045)}
+.public-extra{margin-top:0}
+.public-section-title{letter-spacing:-.045em}
+.public-card{transition:transform .22s ease,border-color .22s ease,background .22s ease;backdrop-filter:blur(16px)}
+.public-card:hover{transform:translateY(-4px);border-color:rgba(157,139,255,.38);background:linear-gradient(145deg,rgba(31,34,67,.94),rgba(10,15,31,.98))}
+.public-card .icon{width:48px;height:48px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(145deg,rgba(139,92,246,.22),rgba(79,140,255,.12));border:1px solid rgba(165,150,255,.18)}
+.public-cta{transition:transform .2s ease,filter .2s ease}.public-cta:hover{transform:translateY(-2px);filter:brightness(1.12)}
+.public-trends{box-shadow:inset 0 1px rgba(255,255,255,.04),0 22px 70px rgba(0,0,0,.18)}
+@media(max-width:700px){.public-nav{width:calc(100% - 28px);padding:16px 0}.public-main{padding-top:12px}.public-hero{width:calc(100% - 28px);min-height:420px;margin-bottom:54px;padding:28px 22px;border-radius:26px}.public-hero h1{font-size:clamp(39px,11vw,58px)}.public-extra{width:calc(100% - 28px)}.public-section-title{font-size:29px}}
+
 </style>
 </head>
 <body class="public-page">
 <div class="dashboard-ambient ambient-a"></div><div class="dashboard-ambient ambient-b"></div>
 <header class="public-nav"><a class="logo" href="/" aria-label="Evruni"><span class="logo-mark" aria-hidden="true"><i></i></span><span class="logo-copy"><span class="logo-word">Evruni</span><span class="logo-tag">AI</span></span></a><div class="public-actions"><a class="ghost" href="/login.php">Войти</a><a class="primary" href="/register.php">Создать аккаунт</a></div></header>
 <main class="public-main">
-<section class="public-hero"><div class="hero-copy"><div class="eyebrow"><span class="pulse-dot"></span> EVRUNI AI WORKSPACE</div><h1>Один AI-workspace.<br><span>Много возможностей.</span></h1><p>Общайтесь с AI, создавайте изображения, исследуйте темы, работайте с документами и используйте API — в одном современном интерфейсе.</p></div></section>
+<section class="public-hero"><div class="hero-copy"><div class="eyebrow"><span class="pulse-dot"></span> EVRUNI · AI WORKSPACE</div><h1>Твоя работа с AI.<br><span>В одном пространстве.</span></h1><p>Создавай изображения и видео, общайся с AI, исследуй идеи и собирай контент. Все основные инструменты — в едином рабочем пространстве Evruni.</p><div class="public-hero-actions"><a class="primary" href="/register.php">Начать бесплатно <span aria-hidden="true">→</span></a><a class="secondary" href="#capabilities">Изучить возможности</a></div></div></section>
 
-<section class="public-extra" aria-label="Возможности Evruni">
+<section class="public-extra" id="capabilities" aria-label="Возможности Evruni">
 <h2 class="public-section-title">Всё главное — в одном месте.</h2>
 <p class="public-section-sub">Не просто чат с AI. Evruni объединяет инструменты для создания контента, работы, исследований, трендов и стриминга.</p>
 <div class="public-grid">
@@ -59,7 +83,7 @@ if(!$u){
 <article class="public-card"><span class="icon">💬</span><h3>AI Chat Bot</h3><p>Отвечает зрителям и помогает поддерживать интерактив.</p></article>
 <article class="public-card"><span class="icon">🛡️</span><h3>AI Moderator</h3><p>Фильтрует спам и проблемные сообщения по событиям.</p></article>
 <article class="public-card"><span class="icon">✂️</span><h3>Auto Clips</h3><p>Отмечай яркие моменты и готовь их к дальнейшей обработке.</p></article>
-<article class="public-card"><span class="icon">💜</span><h3>Прямые донаты</h3><p>Своя страница поддержки с переходом напрямую к платёжному провайдеру.</p></article>
+<article class="public-card"><span class="icon">⚙</span><h3>Управление эфиром</h3><p>Собирай инструменты стримера и основные действия в одном удобном рабочем процессе.</p></article>
 </div>
 
 <div class="public-trends"><div><div class="eyebrow"><span class="pulse-dot"></span> EVRUNI TREND LAB</div><h2 class="public-section-title" style="margin-top:12px">Тренд → идея → контент.</h2><p class="public-section-sub" style="margin-bottom:0">Находи темы, которые сейчас растут, разбирай их с AI и сразу превращай в сценарии, посты, видео или идеи для стрима.</p></div><div class="public-card" style="min-height:0"><span class="icon">⚡</span><h3>Что можно сделать</h3><p>Выбрать тренд → понять, почему он растёт → получить несколько углов подачи → создать контент в Evruni.</p><a class="public-cta" href="/register.php">Попробовать →</a></div></div>
