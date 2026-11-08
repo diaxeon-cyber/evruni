@@ -110,6 +110,18 @@ if(!$u){
 @media(max-width:980px){.public-feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.public-feature-grid{grid-template-columns:1fr;gap:12px}.public-feature-grid .public-card{min-height:132px;padding:20px 52px 18px 108px}.public-feature-grid .public-card:before{left:17px;width:68px;height:68px}.public-feature-grid .public-card .icon{left:34px;font-size:36px}.public-feature-grid .public-card h3{font-size:19px}.public-feature-grid .public-card p{font-size:13px}.public-feature-grid .feature-tag{right:10px;top:9px;font-size:9px}.public-feature-grid .feature-arrow{right:10px;bottom:12px;width:32px;height:32px}}
 
+
+.public-trend-gallery{margin-top:28px;padding:clamp(22px,3vw,34px);border:1px solid rgba(183,119,255,.42);border-radius:30px;background:radial-gradient(ellipse at 0 0,rgba(139,55,255,.22),transparent 48%),linear-gradient(135deg,rgba(26,16,61,.96),rgba(8,14,34,.98));box-shadow:0 22px 75px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.07)}
+.trend-gallery-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px}.trend-gallery-head .public-section-title{margin:12px 0}.trend-gallery-head .public-section-sub{margin:0;max-width:680px}.trend-gallery-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:13px}
+.trend-tile{position:relative;isolation:isolate;overflow:hidden;min-height:190px;padding:15px;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;border:1px solid rgba(221,194,255,.35);border-radius:20px;background:linear-gradient(155deg,rgba(91,54,150,.9),rgba(13,18,43,.98));box-shadow:inset 0 1px rgba(255,255,255,.12);transition:transform .22s ease,border-color .22s ease}
+.trend-tile:hover{transform:translateY(-4px);border-color:rgba(235,197,255,.75)}
+.trend-tile:before{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(circle at 50% 25%,var(--tile-glow,rgba(190,80,255,.62)),transparent 58%),linear-gradient(160deg,transparent 20%,rgba(6,9,25,.94) 88%)}
+.trend-art{position:absolute;z-index:-1;inset:0;display:grid;place-items:center;font-size:76px;font-weight:900;color:rgba(255,255,255,.82);text-shadow:0 0 25px var(--tile-glow,rgba(190,80,255,.8));transform:translateY(-12px)}
+.trend-kind{font-size:9px;letter-spacing:.16em;color:#e7ceff;font-weight:800}.trend-tile b{font-size:14px;color:#fff;line-height:1.25}.trend-tile small{font-size:11px;color:#c0b9d5;line-height:1.35}
+.trend-neon{--tile-glow:rgba(205,65,255,.7);background-color:#34145c}.trend-cinema{--tile-glow:rgba(255,92,156,.65);background-color:#541b4d}.trend-anime{--tile-glow:rgba(119,116,255,.7);background-color:#25245f}.trend-nature{--tile-glow:rgba(255,170,83,.65);background-color:#5b3825}.trend-stream{--tile-glow:rgba(62,179,255,.65);background-color:#173d67}.trend-future{--tile-glow:rgba(83,245,206,.55);background-color:#14534f}
+@media(max-width:1050px){.trend-gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.trend-gallery-head{align-items:flex-start;flex-direction:column}.trend-gallery-head .public-cta{margin-top:0}.trend-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.trend-tile{min-height:155px;padding:12px;border-radius:16px}.trend-art{font-size:58px}.trend-tile b{font-size:12px}.trend-tile small{font-size:10px}}
+
 </style>
 </head>
 <body class="public-page">
@@ -139,7 +151,16 @@ if(!$u){
 <div class="creator-copy"><div class="eyebrow"><span class="pulse-dot"></span> CREATOR WORKSPACE</div><h2>Стримерам и TikTok-креаторам</h2><p>Evruni помогает готовить контент, находить идеи и работать с инструментами для эфира в одном пространстве.</p><ul><li><span>✓</span> Идеи и сценарии для роликов</li><li><span>✓</span> Тренды TikTok и примеры</li><li><span>✓</span> AI-инструменты для контента</li><li><span>✓</span> Инструменты для работы со стримом</li></ul><a class="public-cta" href="/register.php">Открыть инструменты →</a></div>
 </section>
 
-<div class="public-trends" id="trend-lab"><div><div class="eyebrow"><span class="pulse-dot"></span> EVRUNI TREND LAB</div><h2 class="public-section-title" style="margin-top:12px">Тренд → идея → контент.</h2><p class="public-section-sub" style="margin-bottom:0">Находи темы, которые сейчас растут, разбирай их с AI и сразу превращай в сценарии, посты, видео или идеи для стрима.</p></div><div class="public-card" style="min-height:0"><span class="icon">⚡</span><h3>Что можно сделать</h3><p>Выбрать тренд → понять, почему он растёт → получить несколько углов подачи → создать контент в Evruni.</p><a class="public-cta" href="/register.php">Попробовать →</a></div></div>
+<section class="public-trend-gallery" id="trend-lab" aria-label="Evruni Trend Lab">
+<div class="trend-gallery-head"><div><div class="eyebrow"><span class="pulse-dot"></span> EVRUNI TREND LAB</div><h2 class="public-section-title">Тренд → идея → контент.</h2><p class="public-section-sub">Подборка визуальных направлений для вдохновения. Примеры демонстрационные — не live-статистика.</p></div><a class="public-cta" href="/register.php">Открыть Trend Lab →</a></div>
+<div class="trend-gallery-grid">
+<article class="trend-tile trend-neon"><div class="trend-art">✦</div><span class="trend-kind">AI ART</span><b>Неоновый портрет</b><small>Идея для короткого ролика</small></article>
+<article class="trend-tile trend-cinema"><div class="trend-art">▶</div><span class="trend-kind">VIDEO</span><b>Кинематографичный переход</b><small>Сценарий для Reels / TikTok</small></article>
+<article class="trend-tile trend-anime"><div class="trend-art">✧</div><span class="trend-kind">STYLE</span><b>Аниме-эстетика</b><small>Визуальный стиль и обложка</small></article>
+<article class="trend-tile trend-nature"><div class="trend-art">☼</div><span class="trend-kind">MOOD</span><b>Атмосферный кадр</b><small>Настроение для истории</small></article>
+<article class="trend-tile trend-stream"><div class="trend-art">◉</div><span class="trend-kind">STREAM</span><b>Стримерский момент</b><small>Идея клипа из эфира</small></article>
+<article class="trend-tile trend-future"><div class="trend-art">⌁</div><span class="trend-kind">FUTURE</span><b>Футуристичный мир</b><small>Концепт для AI-видео</small></article>
+</div></section>
 <div class="public-bottom-cta"><h2>Попробуй Evruni в деле</h2><p>Создай аккаунт и познакомься с рабочим пространством. Доступность отдельных AI-инструментов зависит от подключённых моделей и настроек.</p><a class="public-cta" href="/register.php">Создать аккаунт →</a></div>
 </section>
 </main>
