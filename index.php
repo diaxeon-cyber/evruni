@@ -114,7 +114,7 @@ if(!$u){
 <p class="public-section-sub">Простой рабочий процесс: выбери инструмент, опиши задачу и продолжай работу в одном пространстве.</p>
 <div class="public-steps"><article class="public-step"><b>01 / ВЫБЕРИ</b><h3>Подходящий инструмент</h3><p>Начни с чата, визуального контента, исследования или другого раздела Evruni.</p></article><article class="public-step"><b>02 / СОЗДАЙ</b><h3>Сформулируй задачу</h3><p>Опиши результат, который хочешь получить, и используй доступные настройки инструмента.</p></article><article class="public-step"><b>03 / ПРОДОЛЖАЙ</b><h3>Собери свою работу</h3><p>Возвращайся к проектам и используй другие инструменты по мере необходимости.</p></article></div>
 
-<section class="public-creator-panel" aria-label="Инструменты для стримеров и TikTok-креаторов">
+<section class="public-creator-panel" id="creator-tools" aria-label="Инструменты для стримеров и TikTok-креаторов">
 <div class="creator-art" aria-hidden="true"><div class="creator-screen"><span>EVRUNI</span><b>▶</b><i>LIVE WORKSPACE</i></div><div class="creator-phone"><span>♪</span><b>▶</b><i>12.4K</i></div><div class="creator-orbit"></div></div>
 <div class="creator-copy"><div class="eyebrow"><span class="pulse-dot"></span> CREATOR WORKSPACE</div><h2>Стримерам и TikTok-креаторам</h2><p>Evruni помогает готовить контент, находить идеи и работать с инструментами для эфира в одном пространстве.</p><ul><li><span>✓</span> Идеи и сценарии для роликов</li><li><span>✓</span> Тренды TikTok и примеры</li><li><span>✓</span> AI-инструменты для контента</li><li><span>✓</span> Инструменты для работы со стримом</li></ul><a class="public-cta" href="/register.php">Открыть инструменты →</a></div>
 </section>
